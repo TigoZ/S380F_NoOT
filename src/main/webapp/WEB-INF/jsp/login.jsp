@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photoblog Login</title>
+    <title>PhotoBlog Login</title>
     <style>
 		*{
 			padding: 0;
@@ -27,11 +27,11 @@
 			align-content:space-around;
 			flex-wrap: wrap;
 			width: 600px;
-			height: 260px;
+			height: 300px;
 		}
 
         #error{
-            color: rgba(255, 0, 0, 0.51);
+            color: rgba(255, 0, 0, 0.52);
         }
 
 		.login-box h2{
@@ -56,7 +56,7 @@
         <p id = 'error'>Login failed.</p>
     </c:if>
 
-    <h2>Photoblog Login</h2>
+    <h2>PhotoBlog Login</h2>
 
     <div class="input-box">
         <form action="login" method="POST">
