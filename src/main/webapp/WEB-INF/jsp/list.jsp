@@ -58,7 +58,7 @@
 <div class="content">
     <c:choose>
         <c:when test="${fn:length(ticketDatabase) == 0}">
-            <i>There are no photos in the website.</i>
+            <i>There are no photos in this website.</i>
         </c:when>
         <c:otherwise>
             <c:forEach items="${ticketDatabase}" var="entry">
