@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Support</title>
+    <title>PhotoBlog</title>
     <style>
 		* {
 			padding: 10px;
@@ -44,7 +44,7 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Photos</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
@@ -64,7 +64,7 @@
             <p>${message}</p>
         </c:otherwise>
     </c:choose>
-    <a href="<c:url value="/ticket" />">Return to list tickets</a>
+    <a href="<c:url value="/ticket" />">Return to list photos</a>
 </div>
 </body>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Support</title>
+    <title>PhotoBlog</title>
     <style>
 		* {
 			padding: 10px;
@@ -45,11 +45,11 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Photos</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Ticket</a>
+    <a href="<c:url value='/ticket/create' />">Upload a photo</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -58,7 +58,7 @@
 <div class="content">
     <c:choose>
         <c:when test="${fn:length(ticketDatabase) == 0}">
-            <i>There are no tickets in the system.</i>
+            <i>There are no photos in the website.</i>
         </c:when>
         <c:otherwise>
             <c:forEach items="${ticketDatabase}" var="entry">

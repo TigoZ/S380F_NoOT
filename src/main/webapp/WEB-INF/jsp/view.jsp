@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Support</title>
+    <title>PhotoBlog</title>
     <style>
 		* {
 			padding: 10px;
@@ -44,27 +44,27 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Photos</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Ticket</a>
+    <a href="<c:url value='/ticket/create' />">Upload a Photo</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </div>
 
 <div class="content">
-    <h2>Ticket #${ticketId}: <c:out value="${ticket.subject}"/></h2>
+    <h2>Photo #${ticketId}: <c:out value="${ticket.subject}"/></h2>
     <security:authorize access="hasRole('ADMIN') or
                           principal.username=='${ticket.customerName}'">
-        [<a href="<c:url value="/ticket/edit/${ticket.id}"/>">Edit</a>]
+        [<a href="<c:url value="/ticket/edit/${ticket.id}"/>">Change</a>]
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
         [<a href="<c:url value="/ticket/delete/${ticket.id}"/>">Delete</a>]
     </security:authorize>
     <br/><br/>
-    <i>Customer Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
+    <i>Photo Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
     <c:out value="${ticket.body}"/><br/><br/>
     <c:if test="${!empty ticket.attachments}">
         Attachments:
@@ -75,7 +75,7 @@
             [<a href="<c:url value="/ticket/${ticketId}/delete/${attachment.id}"/>">Delete</a>]
         </c:forEach><br/><br/>
     </c:if>
-    <a href="<c:url value="/ticket" />">Return to list tickets</a>
+    <a href="<c:url value="/ticket" />">Return to list photos</a>
 </div>
 </body>
 
