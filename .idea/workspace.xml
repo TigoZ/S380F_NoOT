@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +51,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="new-UI_3.0" />
+        <entry key="$PROJECT_DIR$" value="update_content" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,13 +76,13 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "637",
-    "RequestMappingsPanelWidth1": "637",
+    "RequestMappingsPanelWidth0": "705",
+    "RequestMappingsPanelWidth1": "705",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/tigoz/Desktop/NoOT",
+    "last_opened_file_path": "D:/",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -91,7 +90,7 @@
     "project.structure.last.edited": "Facets",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3820483",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.控制台颜色",
     "spring.configuration.checksum": "f225cb79a55d0e20bd211dfeafe9c604",
     "vue.rearranger.settings.migration": "true"
   }
@@ -131,6 +130,7 @@
       <workItem from="1680438448125" duration="814000" />
       <workItem from="1680439373611" duration="91000" />
       <workItem from="1680493691559" duration="5337000" />
+      <workItem from="1680502208023" duration="4180000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1680437545345</created>
