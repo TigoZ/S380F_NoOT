@@ -42,7 +42,16 @@
     </style>
 </head>
 <body>
-
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%
+    Map<String, String> mimeTypes = new HashMap<>();
+    mimeTypes.put("bmp", "image/bmp");
+    mimeTypes.put("gif", "image/gif");
+    mimeTypes.put("jpg", "image/jpeg");
+    mimeTypes.put("jpeg", "image/jpeg");
+    mimeTypes.put("png", "image/png");
+%>
 <div class="nav">
     <h2>Photo Blog</h2>
     <security:authorize access="hasRole('ADMIN')">
@@ -70,16 +79,19 @@
     Photo Blog updated: <fmt:formatDate value="${ticket.updateTime}"
                                         pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
     Description: <c:out value="${ticket.body}"/><br/><br/>
-    <c:if test="${!empty ticket.attachments}">
+
+    <c:if test="${not empty ticket.attachments}">
         Attachments:
         <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
-            <c:if test="${!status.first}">, </c:if>
-            <a href="<c:url value="/ticket/${ticketId}/attachment/${attachment.id}" />">
-                <c:out value="${attachment.name}"/></a>
-            <c:out value="${attachment.name}"/></a>
-            [<a href="<c:url value="/ticket/${ticketId}/delete/${attachment.id}"/>">Delete</a>]
+            <c:if test="${not status.first}">, </c:if>
+            <a href="<c:url value='/ticket/${ticketId}/attachment/${attachment.id}'/>">
+                <c:out value="${attachment.name}"/><br>
+                <img src="data:${mimeTypes[fn:toLowerCase(fn:substringAfterLast(attachment.name, '.'))]};base64,${fn:escapeXml(Base64.getEncoder().encodeToString(attachment.contents))}" alt="${attachment.name}"/><br>
+            </a>
+            [<a href="<c:url value='/ticket/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
         </c:forEach><br/><br/>
     </c:if>
+
     <a href="<c:url value="/ticket" />">Return to Home page</a>
 
 </div>
