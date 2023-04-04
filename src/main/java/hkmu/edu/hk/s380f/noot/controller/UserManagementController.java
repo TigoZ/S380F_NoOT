@@ -19,7 +19,7 @@ public class UserManagementController {
     UserManagementService umService;
     @GetMapping({"", "/", "/list"})
     public String list(ModelMap model) {
-        model.addAttribute("ticketUsers", umService.getTicketUsers());
+        model.addAttribute("blogUsers", umService.getBlogUsers());
         return "listUser";
     }
     public static class Form {
@@ -54,16 +54,16 @@ public class UserManagementController {
     }
     @GetMapping("/create")
     public ModelAndView create() {
-        return new ModelAndView("addUser", "ticketUser", new Form());
+        return new ModelAndView("addUser", "blogUser", new Form());
     }
     @PostMapping("/create")
     public String create(Form form) throws IOException {
-        umService.createTicketUser(form.getUsername(),
+        umService.createBlogUser(form.getUsername(),
                 form.getPassword(), form.getRoles());
         return "redirect:/user/list";
     }
     @GetMapping("/delete/{username}")
-    public String deleteTicket(@PathVariable("username") String username) {
+    public String deleteBlog(@PathVariable("username") String username) {
         umService.delete(username);
         return "redirect:/user/list";
     }

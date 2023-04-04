@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class TicketUser {
+public class BlogUser {
     @Id
     private String username;
     private String password;
@@ -15,9 +15,9 @@ public class TicketUser {
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> tickets = new ArrayList<>();
-    public TicketUser() {}
-    public TicketUser(String username, String password, String[] roles) {
+    private List<Blog> blogs = new ArrayList<>();
+    public BlogUser() {}
+    public BlogUser(String username, String password, String[] roles) {
         this.username = username;
         this.password = "{noop}" + password;
         for (String role : roles) {
@@ -50,11 +50,11 @@ public class TicketUser {
         this.roles = roles;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public List<Blog> getBlogs() {
+        return blogs;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setBlogs(List<Blog> blogs) {
+        this.blogs = blogs;
     }
 }

@@ -1,6 +1,6 @@
 package hkmu.edu.hk.s380f.noot.dao;
 
-import hkmu.edu.hk.s380f.noot.model.TicketUser;
+import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,25 +11,25 @@ import java.util.List;
 @Service
 public class UserManagementService {
     @Resource
-    private TicketUserRepository tuRepo;
+    private BlogUserRepository buRepo;
 
     @Transactional
-    public List<TicketUser> getTicketUsers() {
-        return tuRepo.findAll();
+    public List<BlogUser> getBlogUsers() {
+        return buRepo.findAll();
     }
 
     @Transactional
     public void delete(String username) {
-        TicketUser ticketUser = tuRepo.findById(username).orElse(null);
-        if (ticketUser == null) {
+        BlogUser blogUser = buRepo.findById(username).orElse(null);
+        if (blogUser == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found.");
         }
-        tuRepo.delete(ticketUser);
+        buRepo.delete(blogUser);
     }
 
     @Transactional
-    public void createTicketUser(String username, String password, String[] roles) {
-        TicketUser user = new TicketUser(username, password, roles);
-        tuRepo.save(user);
+    public void createBlogUser(String username, String password, String[] roles) {
+        BlogUser user = new BlogUser(username, password, roles);
+        buRepo.save(user);
     }
 }

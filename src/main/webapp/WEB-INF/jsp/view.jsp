@@ -55,31 +55,31 @@
 </div>
 
 <div class="content">
-    <h2>Photo Blog #${ticketId}: <c:out value="${ticket.subject}"/></h2>
+    <h2>Photo Blog #${blog.id}: <c:out value="${blog.subject}"/></h2>
     <security:authorize access="hasRole('ADMIN') or
-                          principal.username=='${ticket.customerName}'">
-        [<a href="<c:url value="/ticket/edit/${ticket.id}"/>">Edit</a>]
+                          principal.username=='${blog.BlogUserName}'">
+        [<a href="<c:url value="/blog/edit/${blog.id}"/>">Edit</a>]
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
-        [<a href="<c:url value="/blog/delete/${ticket.id}"/>">Delete</a>]
+        [<a href="<c:url value="/blog/delete/${blog.id}"/>">Delete</a>]
     </security:authorize>
     <br/><br/>
-    <i>User Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
-    Photo Blog created: <fmt:formatDate value="${ticket.createTime}"
+    <i>User Name - <c:out value="${blog.BlogUserName}"/></i><br/><br/>
+    Photo Blog created: <fmt:formatDate value="${blog.createTime}"
                                         pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/>
-    Photo Blog updated: <fmt:formatDate value="${ticket.updateTime}"
+    Photo Blog updated: <fmt:formatDate value="${blog.updateTime}"
                                         pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
-    Description: <c:out value="${ticket.body}"/><br/><br/>
+    Description: <c:out value="${blog.body}"/><br/><br/>
 
-    <c:if test="${not empty ticket.attachments}">
+    <c:if test="${not empty blog.attachments}">
         Attachments:
-        <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
+        <c:forEach items="${blog.attachments}" var="attachment" varStatus="status">
             <c:if test="${not status.first}">, </c:if>
-            <a href="<c:url value='/blog/${ticketId}/attachment/${attachment.id}'/>">
+            <a href="<c:url value='/blog/${blogId}/attachment/${attachment.id}'/>">
                 <c:out value="${attachment.name}"/><br>
-                <img src="<c:url value='/blog/${ticketId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
+                <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
             </a>
-            [<a href="<c:url value='/blog/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
+            [<a href="<c:url value='/blog/${blogId}/delete/${attachment.id}'/>">Delete</a>]
         </c:forEach><br/><br/>
     </c:if>
 

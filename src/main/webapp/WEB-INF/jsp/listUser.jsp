@@ -62,7 +62,7 @@
     <a href="<c:url value="/user/create" />">Create a User</a><br/><br/>
 
     <c:choose>
-        <c:when test="${fn:length(ticketUsers) == 0}">
+        <c:when test="${fn:length(blogUsers) == 0}">
             <i>There are no users in the system.</i>
         </c:when>
         <c:otherwise>
@@ -73,7 +73,7 @@
                     <th>Roles</th>
                     <th>Action</th>
                 </tr>
-                <c:forEach items="${ticketUsers}" var="user">
+                <c:forEach items="${blogUsers}" var="user">
                     <tr>
                         <td>${user.username}</td>
                         <td>${fn:substringAfter(user.password, '{noop}')}</td>

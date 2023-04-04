@@ -55,8 +55,8 @@
 </div>
 
 <div class="content">
-    <h2>Edit Blog #${ticket.id}</h2>
-    <form:form method="POST" enctype="multipart/form-data" modelAttribute="ticketForm">
+    <h2>Edit Blog #${blog.id}</h2>
+    <form:form method="POST" enctype="multipart/form-data" modelAttribute="blogForm">
         <form:label path="subject">Subject</form:label><br/>
         <form:input type="text" path="subject"/><br/><br/>
         <form:label path="body">Body</form:label><br/>

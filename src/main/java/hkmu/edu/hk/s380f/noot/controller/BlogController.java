@@ -1,11 +1,11 @@
 package hkmu.edu.hk.s380f.noot.controller;
 
 
-import hkmu.edu.hk.s380f.noot.dao.TicketService;
+import hkmu.edu.hk.s380f.noot.dao.BlogService;
 import hkmu.edu.hk.s380f.noot.exception.AttachmentNotFound;
-import hkmu.edu.hk.s380f.noot.exception.TicketNotFound;
+import hkmu.edu.hk.s380f.noot.exception.BlogNotFound;
 import hkmu.edu.hk.s380f.noot.model.Attachment;
-import hkmu.edu.hk.s380f.noot.model.Ticket;
+import hkmu.edu.hk.s380f.noot.model.Blog;
 import hkmu.edu.hk.s380f.noot.view.DownloadingView;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,21 +28,21 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/blog")
-public class TicketController {
+public class BlogController {
 
     @Resource
-    private TicketService tService;
+    private BlogService bService;
 
     // Controller methods, Form-backing object, ...
     @GetMapping(value = {"", "/list"})
     public String list(ModelMap model) {
-        model.addAttribute("ticketDatabase", tService.getTickets());
+        model.addAttribute("blogDatabase", bService.getBlogs());
         return "list";
     }
 
     @GetMapping("/create")
     public ModelAndView create() {
-        return new ModelAndView("add", "ticketForm", new Form());
+        return new ModelAndView("add", "blogForm", new Form());
     }
 
     public static class Form {
@@ -77,95 +77,97 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public View create(Form form, Principal principal) throws IOException {
-        long ticketId = tService.createTicket(principal.getName(),
+    public String create(Form form, Principal principal, ModelMap model) throws IOException {
+        long blogId = bService.createBlog(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
-        return new RedirectView("/blog/view/" + ticketId, true);
+        model.addAttribute("blogId", blogId);
+        return "redirect:/blog/view/" + blogId;
     }
 
-    @GetMapping("/view/{ticketId}")
-    public String view(@PathVariable("ticketId") long ticketId,
+
+    @GetMapping("/view/{blogId}")
+    public String view(@PathVariable("blogId") long blogId,
                        ModelMap model)
-            throws TicketNotFound {
-        Ticket ticket = tService.getTicket(ticketId);
-        model.addAttribute("ticketId", ticketId);
-        model.addAttribute("ticket", ticket);
+            throws BlogNotFound {
+        Blog blog = bService.getBlog(blogId);
+        model.addAttribute("blogId", blogId);
+        model.addAttribute("blog", blog);
         return "view";
     }
 
-    @GetMapping("/{ticketId}/attachment/{attachment:.+}")
-    public View download(@PathVariable("ticketId") long ticketId,
+    @GetMapping("/{blogId}/attachment/{attachment:.+}")
+    public View download(@PathVariable("blogId") long blogId,
                          @PathVariable("attachment") UUID attachmentId)
-            throws TicketNotFound, AttachmentNotFound {
-        Attachment attachment = tService.getAttachment(ticketId, attachmentId);
+            throws BlogNotFound, AttachmentNotFound {
+        Attachment attachment = bService.getAttachment(blogId, attachmentId);
         return new DownloadingView(attachment.getName(),
                 attachment.getMimeContentType(), attachment.getContents());
     }
-    @GetMapping("/{ticketId}/image/{attachment:.+}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("ticketId") long ticketId,
+    @GetMapping("/{blogId}/image/{attachment:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
                                            @PathVariable("attachment") UUID attachmentId)
-            throws TicketNotFound, AttachmentNotFound {
-        Attachment attachment = tService.getAttachment(ticketId, attachmentId);
+            throws BlogNotFound, AttachmentNotFound {
+        Attachment attachment = bService.getAttachment(blogId, attachmentId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(attachment.getMimeContentType()));
         headers.setContentDispositionFormData(attachment.getName(), attachment.getName());
         return new ResponseEntity<>(attachment.getContents(), headers, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{ticketId}")
-    public String deleteTicket(@PathVariable("ticketId") long ticketId)
-            throws TicketNotFound {
-        tService.delete(ticketId);
+    @GetMapping("/delete/{blogId}")
+    public String deleteBlog(@PathVariable("blogId") long blogId)
+            throws BlogNotFound {
+        bService.delete(blogId);
         return "redirect:/blog/list";
     }
 
-    @GetMapping("/{ticketId}/delete/{attachment:.+}")
-    public String deleteAttachment(@PathVariable("ticketId") long ticketId,
+    @GetMapping("/{blogId}/delete/{attachment:.+}")
+    public String deleteAttachment(@PathVariable("blogId") long blogId,
                                    @PathVariable("attachment") UUID attachmentId)
-            throws TicketNotFound, AttachmentNotFound {
-        tService.deleteAttachment(ticketId, attachmentId);
-        return "redirect:/blog/view/" + ticketId;
+            throws BlogNotFound, AttachmentNotFound {
+        bService.deleteAttachment(blogId, attachmentId);
+        return "redirect:/blog/view/" + blogId;
     }
 
-    @GetMapping("/edit/{ticketId}")
-    public ModelAndView showEdit(@PathVariable("ticketId") long ticketId,
+    @GetMapping("/edit/{blogId}")
+    public ModelAndView showEdit(@PathVariable("blogId") long blogId,
                                  Principal principal, HttpServletRequest request)
-            throws TicketNotFound {
-        Ticket ticket = tService.getTicket(ticketId);
-        if (ticket == null
+            throws BlogNotFound {
+        Blog blog = bService.getBlog(blogId);
+        if (blog == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(ticket.getCustomerName()))) {
+                && !principal.getName().equals(blog.getBlogUserName()))) {
             return new ModelAndView(new RedirectView("/blog/list", true));
         }
 
         ModelAndView modelAndView = new ModelAndView("edit");
-        modelAndView.addObject("ticket", ticket);
+        modelAndView.addObject("blog", blog);
 
-        Form ticketForm = new Form();
-        ticketForm.setSubject(ticket.getSubject());
-        ticketForm.setBody(ticket.getBody());
-        modelAndView.addObject("ticketForm", ticketForm);
+        Form blogForm = new Form();
+        blogForm.setSubject(blog.getSubject());
+        blogForm.setBody(blog.getBody());
+        modelAndView.addObject("blogForm", blogForm);
 
         return modelAndView;
     }
 
-    @PostMapping("/edit/{ticketId}")
-    public String edit(@PathVariable("ticketId") long ticketId, Form form,
+    @PostMapping("/edit/{blogId}")
+    public String edit(@PathVariable("blogId") long blogId, Form form,
                        Principal principal, HttpServletRequest request)
-            throws IOException, TicketNotFound {
-        Ticket ticket = tService.getTicket(ticketId);
-        if (ticket == null
+            throws IOException, BlogNotFound {
+        Blog blog = bService.getBlog(blogId);
+        if (blog == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(ticket.getCustomerName()))) {
+                && !principal.getName().equals(blog.getBlogUserName()))) {
             return "redirect:/blog/list";
         }
 
-        tService.updateTicket(ticketId, form.getSubject(),
+        bService.updateBlog(blogId, form.getSubject(),
                 form.getBody(), form.getAttachments());
-        return "redirect:/blog/view/" + ticketId;
+        return "redirect:/blog/view/" + blogId;
     }
 
-    @ExceptionHandler({TicketNotFound.class, AttachmentNotFound.class})
+    @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})
     public ModelAndView error(Exception e) {
         return new ModelAndView("error", "message", e.getMessage());
     }

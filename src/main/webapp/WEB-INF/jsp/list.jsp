@@ -57,17 +57,17 @@
 
 <div class="content">
     <c:choose>
-        <c:when test="${fn:length(ticketDatabase) == 0}">
-            <i>There are no tickets in the system.</i>
+        <c:when test="${fn:length(blogDatabase) == 0}">
+            <i>There are no blogs in the system.</i>
         </c:when>
         <c:otherwise>
-            <c:forEach items="${ticketDatabase}" var="entry">
-                Ticket ${entry.id}:
+            <c:forEach items="${blogDatabase}" var="entry">
+                Blog ${entry.id}:
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
-                (customer: <c:out value="${entry.customerName}"/>)
+                (customer: <c:out value="${entry.BlogUserName}"/>)
                 <security:authorize access="hasRole('ADMIN') or
-                                principal.username=='${entry.customerName}'">
+                                principal.username=='${entry.BlogUserName}'">
                     [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
                 </security:authorize>
                 <security:authorize access="hasRole('ADMIN')">

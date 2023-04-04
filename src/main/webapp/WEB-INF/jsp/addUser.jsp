@@ -44,11 +44,11 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Blogs</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/blog/create' />">Create a Ticket</a>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -56,7 +56,7 @@
 
 <div class="content">
     <h2>Create a User</h2>
-    <form:form method="POST" modelAttribute="ticketUser">
+    <form:form method="POST" modelAttribute="blogUser">
         <form:label path="username">Username</form:label><br/>
         <form:input type="text" path="username"/><br/><br/>
         <form:label path="password">Password</form:label><br/>

@@ -11,15 +11,15 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Ticket {
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name", insertable = false, updatable = false)
-    private String customerName;
+    @Column(name = "name" ,insertable=false, updatable=false)
+    private String BlogUserName;
     @ManyToOne
     @JoinColumn(name = "name")
-    private TicketUser customer;
+    private BlogUser customer;
     private String subject;
     private String body;
     @CreationTimestamp
@@ -27,7 +27,7 @@ public class Ticket {
     @UpdateTimestamp
     private Date updateTime;
 
-    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "blog", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
@@ -41,12 +41,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getBlogUserName() {
+        return BlogUserName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setBlogUserName(String blogUserName) {
+        this.BlogUserName = blogUserName;
     }
 
     public String getSubject() {
@@ -74,17 +74,18 @@ public class Ticket {
     }
 
     public void deleteAttachment(Attachment attachment) {
-        attachment.setTicket(null);
+        attachment.setBlog(null);
         this.attachments.remove(attachment);
     }
 
-    public TicketUser getCustomer() {
+    public BlogUser getBloguser() {
         return customer;
     }
 
-    public void setCustomer(TicketUser customer) {
-        this.customer = customer;
+    public void setBloguser(BlogUser bloguser) {
+        this.customer = bloguser;
     }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -101,5 +102,3 @@ public class Ticket {
         this.updateTime = updateTime;
     }
 }
-
-
