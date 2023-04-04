@@ -48,7 +48,7 @@
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Blog</a>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -61,7 +61,7 @@
         [<a href="<c:url value="/ticket/edit/${ticket.id}"/>">Edit</a>]
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
-        [<a href="<c:url value="/ticket/delete/${ticket.id}"/>">Delete</a>]
+        [<a href="<c:url value="/blog/delete/${ticket.id}"/>">Delete</a>]
     </security:authorize>
     <br/><br/>
     <i>User Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
@@ -75,15 +75,15 @@
         Attachments:
         <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
             <c:if test="${not status.first}">, </c:if>
-            <a href="<c:url value='/ticket/${ticketId}/attachment/${attachment.id}'/>">
+            <a href="<c:url value='/blog/${ticketId}/attachment/${attachment.id}'/>">
                 <c:out value="${attachment.name}"/><br>
-                <img src="<c:url value='/ticket/${ticketId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
+                <img src="<c:url value='/blog/${ticketId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
             </a>
-            [<a href="<c:url value='/ticket/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
+            [<a href="<c:url value='/blog/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
         </c:forEach><br/><br/>
     </c:if>
 
-    <a href="<c:url value="/ticket" />">Return to Home page</a>
+    <a href="<c:url value="/blog" />">Return to Home page</a>
 
 </div>
 

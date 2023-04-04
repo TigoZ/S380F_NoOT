@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/ticket")
+@RequestMapping("/blog")
 public class TicketController {
 
     @Resource
@@ -80,7 +80,7 @@ public class TicketController {
     public View create(Form form, Principal principal) throws IOException {
         long ticketId = tService.createTicket(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
-        return new RedirectView("/ticket/view/" + ticketId, true);
+        return new RedirectView("/blog/view/" + ticketId, true);
     }
 
     @GetMapping("/view/{ticketId}")
@@ -116,7 +116,7 @@ public class TicketController {
     public String deleteTicket(@PathVariable("ticketId") long ticketId)
             throws TicketNotFound {
         tService.delete(ticketId);
-        return "redirect:/ticket/list";
+        return "redirect:/blog/list";
     }
 
     @GetMapping("/{ticketId}/delete/{attachment:.+}")
@@ -124,7 +124,7 @@ public class TicketController {
                                    @PathVariable("attachment") UUID attachmentId)
             throws TicketNotFound, AttachmentNotFound {
         tService.deleteAttachment(ticketId, attachmentId);
-        return "redirect:/ticket/view/" + ticketId;
+        return "redirect:/blog/view/" + ticketId;
     }
 
     @GetMapping("/edit/{ticketId}")
@@ -135,7 +135,7 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return new ModelAndView(new RedirectView("/ticket/list", true));
+            return new ModelAndView(new RedirectView("/blog/list", true));
         }
 
         ModelAndView modelAndView = new ModelAndView("edit");
@@ -157,12 +157,12 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return "redirect:/ticket/list";
+            return "redirect:/blog/list";
         }
 
         tService.updateTicket(ticketId, form.getSubject(),
                 form.getBody(), form.getAttachments());
-        return "redirect:/ticket/view/" + ticketId;
+        return "redirect:/blog/view/" + ticketId;
     }
 
     @ExceptionHandler({TicketNotFound.class, AttachmentNotFound.class})
