@@ -9,6 +9,10 @@ import hkmu.edu.hk.s380f.noot.model.Ticket;
 import hkmu.edu.hk.s380f.noot.view.DownloadingView;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -96,6 +100,16 @@ public class TicketController {
         Attachment attachment = tService.getAttachment(ticketId, attachmentId);
         return new DownloadingView(attachment.getName(),
                 attachment.getMimeContentType(), attachment.getContents());
+    }
+    @GetMapping("/{ticketId}/image/{attachment:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("ticketId") long ticketId,
+                                           @PathVariable("attachment") UUID attachmentId)
+            throws TicketNotFound, AttachmentNotFound {
+        Attachment attachment = tService.getAttachment(ticketId, attachmentId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(attachment.getMimeContentType()));
+        headers.setContentDispositionFormData(attachment.getName(), attachment.getName());
+        return new ResponseEntity<>(attachment.getContents(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/delete/{ticketId}")

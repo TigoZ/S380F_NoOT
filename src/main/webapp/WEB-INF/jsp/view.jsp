@@ -42,16 +42,7 @@
     </style>
 </head>
 <body>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
-<%
-    Map<String, String> mimeTypes = new HashMap<>();
-    mimeTypes.put("bmp", "image/bmp");
-    mimeTypes.put("gif", "image/gif");
-    mimeTypes.put("jpg", "image/jpeg");
-    mimeTypes.put("jpeg", "image/jpeg");
-    mimeTypes.put("png", "image/png");
-%>
+
 <div class="nav">
     <h2>Photo Blog</h2>
     <security:authorize access="hasRole('ADMIN')">
@@ -86,7 +77,7 @@
             <c:if test="${not status.first}">, </c:if>
             <a href="<c:url value='/ticket/${ticketId}/attachment/${attachment.id}'/>">
                 <c:out value="${attachment.name}"/><br>
-                <img src="data:${mimeTypes[fn:toLowerCase(fn:substringAfterLast(attachment.name, '.'))]};base64,${fn:escapeXml(Base64.getEncoder().encodeToString(attachment.contents))}" alt="${attachment.name}"/><br>
+                <img src="<c:url value='/ticket/${ticketId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
             </a>
             [<a href="<c:url value='/ticket/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
         </c:forEach><br/><br/>
