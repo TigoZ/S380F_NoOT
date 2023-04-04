@@ -5,6 +5,7 @@ import hkmu.edu.hk.s380f.noot.exception.AttachmentNotFound;
 import hkmu.edu.hk.s380f.noot.exception.TicketNotFound;
 import hkmu.edu.hk.s380f.noot.model.Attachment;
 import hkmu.edu.hk.s380f.noot.model.Ticket;
+import hkmu.edu.hk.s380f.noot.model.TicketUser;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,9 @@ import java.util.UUID;
 public class TicketService {
     @Resource
     private TicketRepository tRepo;
+
+    @Resource
+    private TicketUserRepository tuRepo;
 
     @Resource
     private AttachmentRepository aRepo;
@@ -57,6 +61,7 @@ public class TicketService {
         if (deletedTicket == null) {
             throw new TicketNotFound(id);
         }
+        deletedTicket.getCustomer().getTickets().remove(deletedTicket);
         tRepo.delete(deletedTicket);
     }
 
@@ -81,8 +86,12 @@ public class TicketService {
     public long createTicket(String customerName, String subject,
                              String body, List<MultipartFile> attachments)
             throws IOException {
+        TicketUser customer = tuRepo.findById(customerName).orElse(null);
+        if (customer == null) {
+            throw new RuntimeException("User " + customerName + " not found.");
+        }
         Ticket ticket = new Ticket();
-        ticket.setCustomerName(customerName);
+        ticket.setCustomer(customer);
         ticket.setSubject(subject);
         ticket.setBody(body);
 
@@ -99,6 +108,7 @@ public class TicketService {
             }
         }
         Ticket savedTicket = tRepo.save(ticket);
+        customer.getTickets().add(savedTicket);
         return savedTicket.getId();
     }
 

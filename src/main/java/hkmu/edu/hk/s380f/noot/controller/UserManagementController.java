@@ -17,19 +17,17 @@ import java.io.IOException;
 public class UserManagementController {
     @Resource
     UserManagementService umService;
-
     @GetMapping({"", "/", "/list"})
     public String list(ModelMap model) {
         model.addAttribute("ticketUsers", umService.getTicketUsers());
         return "listUser";
     }
-
     public static class Form {
         private String username;
         private String password;
         private String[] roles;
-
         // getters and setters for all properties
+
         public String getUsername() {
             return username;
         }
@@ -54,19 +52,16 @@ public class UserManagementController {
             this.roles = roles;
         }
     }
-
     @GetMapping("/create")
     public ModelAndView create() {
         return new ModelAndView("addUser", "ticketUser", new Form());
     }
-
     @PostMapping("/create")
     public String create(Form form) throws IOException {
         umService.createTicketUser(form.getUsername(),
                 form.getPassword(), form.getRoles());
         return "redirect:/user/list";
     }
-
     @GetMapping("/delete/{username}")
     public String deleteTicket(@PathVariable("username") String username) {
         umService.delete(username);

@@ -10,15 +10,13 @@ import java.util.List;
 public class TicketUser {
     @Id
     private String username;
-
     private String password;
-
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
-
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
     public TicketUser() {}
-
     public TicketUser(String username, String password, String[] roles) {
         this.username = username;
         this.password = "{noop}" + password;
@@ -26,8 +24,8 @@ public class TicketUser {
             this.roles.add(new UserRole(this, role));
         }
     }
-
     // getters and setters of all properties
+
     public String getUsername() {
         return username;
     }
@@ -50,5 +48,13 @@ public class TicketUser {
 
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }
