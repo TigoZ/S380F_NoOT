@@ -65,9 +65,9 @@
                 Blog ${entry.id}:
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
-                (customer: <c:out value="${entry.BlogUserName}"/>)
+                (customer: <c:out value="${entry.customerName}"/>)
                 <security:authorize access="hasRole('ADMIN') or
-                                principal.username=='${entry.BlogUserName}'">
+                                principal.username=='${entry.customerName}'">
                     [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
                 </security:authorize>
                 <security:authorize access="hasRole('ADMIN')">

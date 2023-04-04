@@ -61,7 +61,7 @@ public class BlogService {
         if (deletedBlog == null) {
             throw new BlogNotFound(id);
         }
-        deletedBlog.getBloguser().getBlogs().remove(deletedBlog);
+        deletedBlog.getCustomer().getBlogs().remove(deletedBlog);
         bRepo.delete(deletedBlog);
     }
 
@@ -91,7 +91,7 @@ public class BlogService {
             throw new RuntimeException("User " + customerName + " not found.");
         }
         Blog blog = new Blog();
-        blog.setBloguser(customer);
+        blog.setCustomer(customer);
         blog.setSubject(subject);
         blog.setBody(body);
 

@@ -23,9 +23,6 @@ public class Attachment {
     @Lob
     private byte[] contents;
 
-    @Column(name = "blog_id", insertable=false, updatable=false)
-    private long blogId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id")
     private Blog blog;
@@ -61,14 +58,6 @@ public class Attachment {
 
     public void setContents(byte[] contents) {
         this.contents = contents;
-    }
-
-    public long getBlogId() {
-        return blogId;
-    }
-
-    public void setBlogId(long blogId) {
-        this.blogId = blogId;
     }
 
     public Blog getBlog() {

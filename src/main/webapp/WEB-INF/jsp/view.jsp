@@ -55,16 +55,16 @@
 </div>
 
 <div class="content">
-    <h2>Photo Blog #${blog.id}: <c:out value="${blog.subject}"/></h2>
+    <h2>Photo Blog #${blogId}: <c:out value="${blog.subject}"/></h2>
     <security:authorize access="hasRole('ADMIN') or
-                          principal.username=='${blog.BlogUserName}'">
+                          principal.username=='${blog.customerName}'">
         [<a href="<c:url value="/blog/edit/${blog.id}"/>">Edit</a>]
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
         [<a href="<c:url value="/blog/delete/${blog.id}"/>">Delete</a>]
     </security:authorize>
     <br/><br/>
-    <i>User Name - <c:out value="${blog.BlogUserName}"/></i><br/><br/>
+    <i>User Name - <c:out value="${blog.customerName}"/></i><br/><br/>
     Photo Blog created: <fmt:formatDate value="${blog.createTime}"
                                         pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/>
     Photo Blog updated: <fmt:formatDate value="${blog.updateTime}"

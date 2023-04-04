@@ -16,7 +16,7 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name" ,insertable=false, updatable=false)
-    private String BlogUserName;
+    private String customerName;
     @ManyToOne
     @JoinColumn(name = "name")
     private BlogUser customer;
@@ -32,6 +32,8 @@ public class Blog {
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
 
+
+
     // getters and setters of all properties
     public long getId() {
         return id;
@@ -41,12 +43,12 @@ public class Blog {
         this.id = id;
     }
 
-    public String getBlogUserName() {
-        return BlogUserName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setBlogUserName(String blogUserName) {
-        this.BlogUserName = blogUserName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getSubject() {
@@ -78,12 +80,12 @@ public class Blog {
         this.attachments.remove(attachment);
     }
 
-    public BlogUser getBloguser() {
+    public BlogUser getCustomer() {
         return customer;
     }
 
-    public void setBloguser(BlogUser bloguser) {
-        this.customer = bloguser;
+    public void setCustomer(BlogUser customer) {
+        this.customer = customer;
     }
 
     public Date getCreateTime() {

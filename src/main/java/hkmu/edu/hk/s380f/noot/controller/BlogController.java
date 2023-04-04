@@ -77,11 +77,10 @@ public class BlogController {
     }
 
     @PostMapping("/create")
-    public String create(Form form, Principal principal, ModelMap model) throws IOException {
+    public View create(Form form, Principal principal) throws IOException {
         long blogId = bService.createBlog(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
-        model.addAttribute("blogId", blogId);
-        return "redirect:/blog/view/" + blogId;
+        return new RedirectView("/blog/view/" + blogId, true);
     }
 
 
@@ -136,7 +135,7 @@ public class BlogController {
         Blog blog = bService.getBlog(blogId);
         if (blog == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(blog.getBlogUserName()))) {
+                && !principal.getName().equals(blog.getCustomerName()))) {
             return new ModelAndView(new RedirectView("/blog/list", true));
         }
 
@@ -158,7 +157,7 @@ public class BlogController {
         Blog blog = bService.getBlog(blogId);
         if (blog == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(blog.getBlogUserName()))) {
+                && !principal.getName().equals(blog.getCustomerName()))) {
             return "redirect:/blog/list";
         }
 
