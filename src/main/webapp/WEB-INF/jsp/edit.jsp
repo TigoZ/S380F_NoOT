@@ -48,7 +48,7 @@
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Blog</a>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -65,7 +65,7 @@
         <input type="file" name="attachments" multiple="multiple"/><br/><br/>
         <input type="submit" value="Save"/><br/><br/>
     </form:form>
-    <a href="<c:url value="/ticket" />">Return to Home page</a>
+    <a href="<c:url value="/blog" />">Return to Home page</a>
 </div>
 </body>
 

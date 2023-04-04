@@ -49,7 +49,7 @@
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Blog</a>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -63,15 +63,15 @@
         <c:otherwise>
             <c:forEach items="${ticketDatabase}" var="entry">
                 Ticket ${entry.id}:
-                <a href="<c:url value="/ticket/view/${entry.id}" />">
+                <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
                 (customer: <c:out value="${entry.customerName}"/>)
                 <security:authorize access="hasRole('ADMIN') or
                                 principal.username=='${entry.customerName}'">
-                    [<a href="<c:url value="/ticket/edit/${entry.id}"/>">Edit</a>]
+                    [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
                 </security:authorize>
                 <security:authorize access="hasRole('ADMIN')">
-                    [<a href="<c:url value="/ticket/delete/${entry.id}"/>">Delete</a>]
+                    [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
                 </security:authorize>
                 <br/>
             </c:forEach>
