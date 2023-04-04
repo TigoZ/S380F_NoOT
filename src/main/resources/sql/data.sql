@@ -1,4 +1,4 @@
-INSERT INTO users (username, password)VALUES ('tigo', '{noop}tigo');
+INSERT INTO users (username, password) VALUES ('tigo', '{noop}tigo');
 INSERT INTO user_roles(username, role) VALUES ('tigo', 'ROLE_USER');
 INSERT INTO user_roles(username, role) VALUES ('tigo', 'ROLE_ADMIN');
 

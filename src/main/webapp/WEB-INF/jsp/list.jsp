@@ -17,7 +17,7 @@
 			overflow-x: hidden;
 			padding-top: 20px;
 			border-right: 1px solid rgb(176, 170, 170);
-			float: left; /* 添加float:left属性 */
+			float: left;
 		}
 
 		.nav a {
@@ -45,11 +45,11 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Photo Blog</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Ticket</a>
+    <a href="<c:url value='/ticket/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
