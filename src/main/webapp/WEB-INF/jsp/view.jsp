@@ -17,7 +17,7 @@
 			overflow-x: hidden;
 			padding-top: 20px;
 			border-right: 1px solid rgb(176, 170, 170);
-			float: left; /* 添加float:left属性 */
+			float: left;
 		}
 
 		.nav a {
@@ -42,37 +42,51 @@
     </style>
 </head>
 <body>
-<h2>Photo Blog #${ticketId}: <c:out value="${ticket.subject}"/></h2>
-<security:authorize access="hasRole('ADMIN') or
+
+<div class="nav">
+    <h2>Photo Blog</h2>
+    <security:authorize access="hasRole('ADMIN')">
+        <a href="<c:url value='/user' />">Manage User Accounts</a>
+    </security:authorize>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
+    <c:url var="logoutUrl" value="/logout"/>
+    <a href="/logout" id="logout">Log out</a>
+    <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</div>
+
+<div class="content">
+    <h2>Photo Blog #${ticketId}: <c:out value="${ticket.subject}"/></h2>
+    <security:authorize access="hasRole('ADMIN') or
                           principal.username=='${ticket.customerName}'">
-    [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
-</security:authorize>
-<security:authorize access="hasRole('ADMIN')">
-    [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
-</security:authorize>
-<br/><br/>
-<i>User Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
-Photo Blog created: <fmt:formatDate value="${ticket.createTime}"
-                                pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/>
-Photo Blog updated: <fmt:formatDate value="${ticket.updateTime}"
-                                pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
-Description: <c:out value="${ticket.body}"/><br/><br/>
-<c:if test="${!empty ticket.attachments}">
-    Attachments:
-    <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
-        <c:if test="${!status.first}">, </c:if>
-        <a href="<c:url value="/ticket/${ticketId}/attachment/${attachment.id}" />">
-            <c:out value="${attachment.name}"/></a>
-            <c:out value="${attachment.name}"/></a>
-        [<a href="<c:url value="/ticket/${ticketId}/delete/${attachment.id}" />">Delete</a>]
-    </c:forEach><br/><br/>
-</c:if>
-<a href="<c:url value="/ticket" />">Return to Photo Blog homepage</a>
-<c:url var="logoutUrl" value="/logout"/>
-<form action="${logoutUrl}" method="post">
-    <input type="submit" value="Log out" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
+        [<a href="<c:url value="/ticket/edit/${ticket.id}"/>">Edit</a>]
+    </security:authorize>
+    <security:authorize access="hasRole('ADMIN')">
+        [<a href="<c:url value="/blog/delete/${ticket.id}"/>">Delete</a>]
+    </security:authorize>
+    <br/><br/>
+    <i>User Name - <c:out value="${ticket.customerName}"/></i><br/><br/>
+    Photo Blog created: <fmt:formatDate value="${ticket.createTime}"
+                                        pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/>
+    Photo Blog updated: <fmt:formatDate value="${ticket.updateTime}"
+                                        pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
+    Description: <c:out value="${ticket.body}"/><br/><br/>
+
+    <c:if test="${not empty ticket.attachments}">
+        Attachments:
+        <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
+            <c:if test="${not status.first}">, </c:if>
+            <a href="<c:url value='/blog/${ticketId}/attachment/${attachment.id}'/>">
+                <c:out value="${attachment.name}"/><br>
+                <img src="<c:url value='/blog/${ticketId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
+            </a>
+            [<a href="<c:url value='/blog/${ticketId}/delete/${attachment.id}'/>">Delete</a>]
+        </c:forEach><br/><br/>
+    </c:if>
+
+    <a href="<c:url value="/blog" />">Return to Home page</a>
+
+</div>
+
 </body>
 
 <script>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Support</title>
+    <title>Photo Blog</title>
     <style>
 		* {
 			padding: 10px;
@@ -17,7 +17,7 @@
 			overflow-x: hidden;
 			padding-top: 20px;
 			border-right: 1px solid rgb(176, 170, 170);
-			float: left; /* 添加float:left属性 */
+			float: left;
 		}
 
 		.nav a {
@@ -44,18 +44,18 @@
 <body>
 
 <div class="nav">
-    <h2>Tickets</h2>
+    <h2>Photo Blog</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Ticket</a>
+    <a href="<c:url value='/blog/create' />">Create a Blog</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </div>
 
 <div class="content">
-    <h2>Edit Ticket #${ticket.id}</h2>
+    <h2>Edit Blog #${ticket.id}</h2>
     <form:form method="POST" enctype="multipart/form-data" modelAttribute="ticketForm">
         <form:label path="subject">Subject</form:label><br/>
         <form:input type="text" path="subject"/><br/><br/>
@@ -65,7 +65,7 @@
         <input type="file" name="attachments" multiple="multiple"/><br/><br/>
         <input type="submit" value="Save"/><br/><br/>
     </form:form>
-    <a href="<c:url value="/ticket" />">Return to list tickets</a>
+    <a href="<c:url value="/blog" />">Return to Home page</a>
 </div>
 </body>
 

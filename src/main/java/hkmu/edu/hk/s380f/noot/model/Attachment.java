@@ -78,5 +78,6 @@ public class Attachment {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
+
 }
 
