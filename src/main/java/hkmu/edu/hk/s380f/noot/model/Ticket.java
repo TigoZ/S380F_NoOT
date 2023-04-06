@@ -1,10 +1,13 @@
 package hkmu.edu.hk.s380f.noot.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,10 +15,17 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name")
+    @Column(name = "name", insertable = false, updatable = false)
     private String customerName;
+    @ManyToOne
+    @JoinColumn(name = "name")
+    private TicketUser customer;
     private String subject;
     private String body;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date updateTime;
 
     @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -66,6 +76,29 @@ public class Ticket {
     public void deleteAttachment(Attachment attachment) {
         attachment.setTicket(null);
         this.attachments.remove(attachment);
+    }
+
+    public TicketUser getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(TicketUser customer) {
+        this.customer = customer;
+    }
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
 

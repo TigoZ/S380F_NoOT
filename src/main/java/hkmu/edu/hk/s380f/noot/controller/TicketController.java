@@ -9,6 +9,10 @@ import hkmu.edu.hk.s380f.noot.model.Ticket;
 import hkmu.edu.hk.s380f.noot.view.DownloadingView;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/ticket")
+@RequestMapping("/blog")
 public class TicketController {
 
     @Resource
@@ -76,7 +80,7 @@ public class TicketController {
     public View create(Form form, Principal principal) throws IOException {
         long ticketId = tService.createTicket(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
-        return new RedirectView("/ticket/view/" + ticketId, true);
+        return new RedirectView("/blog/view/" + ticketId, true);
     }
 
     @GetMapping("/view/{ticketId}")
@@ -97,12 +101,22 @@ public class TicketController {
         return new DownloadingView(attachment.getName(),
                 attachment.getMimeContentType(), attachment.getContents());
     }
+    @GetMapping("/{ticketId}/image/{attachment:.+}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("ticketId") long ticketId,
+                                           @PathVariable("attachment") UUID attachmentId)
+            throws TicketNotFound, AttachmentNotFound {
+        Attachment attachment = tService.getAttachment(ticketId, attachmentId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(attachment.getMimeContentType()));
+        headers.setContentDispositionFormData(attachment.getName(), attachment.getName());
+        return new ResponseEntity<>(attachment.getContents(), headers, HttpStatus.OK);
+    }
 
     @GetMapping("/delete/{ticketId}")
     public String deleteTicket(@PathVariable("ticketId") long ticketId)
             throws TicketNotFound {
         tService.delete(ticketId);
-        return "redirect:/ticket/list";
+        return "redirect:/blog/list";
     }
 
     @GetMapping("/{ticketId}/delete/{attachment:.+}")
@@ -110,7 +124,7 @@ public class TicketController {
                                    @PathVariable("attachment") UUID attachmentId)
             throws TicketNotFound, AttachmentNotFound {
         tService.deleteAttachment(ticketId, attachmentId);
-        return "redirect:/ticket/view/" + ticketId;
+        return "redirect:/blog/view/" + ticketId;
     }
 
     @GetMapping("/edit/{ticketId}")
@@ -121,7 +135,7 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return new ModelAndView(new RedirectView("/ticket/list", true));
+            return new ModelAndView(new RedirectView("/blog/list", true));
         }
 
         ModelAndView modelAndView = new ModelAndView("edit");
@@ -143,12 +157,12 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return "redirect:/ticket/list";
+            return "redirect:/blog/list";
         }
 
         tService.updateTicket(ticketId, form.getSubject(),
                 form.getBody(), form.getAttachments());
-        return "redirect:/ticket/view/" + ticketId;
+        return "redirect:/blog/view/" + ticketId;
     }
 
     @ExceptionHandler({TicketNotFound.class, AttachmentNotFound.class})
