@@ -34,7 +34,7 @@
 
 
 		.content {
-			margin: 0 0 0 220px;
+			margin: auto;
 			max-width: 800px;
 			padding: 20px;
 		}

@@ -10,7 +10,7 @@
 
 		.nav {
 			height: 100%;
-			width: 200px;
+			width: 300px;
 			position: fixed;
 			top: 0;
 			left: 0;
@@ -34,7 +34,7 @@
 
 
 		.content {
-			margin: 0 0 0 220px;
+			margin: auto;
 			max-width: 800px;
 			padding: 20px;
 		}

@@ -4,10 +4,7 @@ import hkmu.edu.hk.s380f.noot.dao.UserManagementService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -67,4 +64,26 @@ public class UserManagementController {
         umService.delete(username);
         return "redirect:/user/list";
     }
+
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register";
+    }
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String password,
+                               @RequestParam String confirmPassword,
+                               @RequestParam String email,
+                               @RequestParam String phone) {
+        if (!password.equals(confirmPassword)) {
+            return "redirect:/register?error";
+        }
+
+        // Add logic to create a new user with the provided information
+        // and save it to the database
+
+        return "redirect:/login";
+    }
+
+
 }
