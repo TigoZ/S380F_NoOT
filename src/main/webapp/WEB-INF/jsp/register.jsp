@@ -93,12 +93,13 @@
 		}
 
     </style>
+    <link href="https://fonts.googlefonts.cn/css?family=Arvo" rel="stylesheet">
 </head>
 <body>
 <div class="main">
     <div class="register-box">
 
-        <h2>Create a User</h2>
+        <h2 style="font-family: 'Arvo', serif;">Register</h2>
 
         <div class="input-box">
             <form:form method="POST" modelAttribute="user">

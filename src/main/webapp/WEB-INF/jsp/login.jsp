@@ -48,7 +48,7 @@
 			display: flex;
 			justify-content: center;
 			color: #101e2d;
-			font-size: 50px;
+			font-size: 46px;
 			padding-bottom: 40px;
 		}
 
@@ -112,6 +112,7 @@
         }
 
     </style>
+    <link href="https://fonts.googlefonts.cn/css?family=Arvo" rel="stylesheet">
 </head>
 <body>
 
@@ -122,7 +123,7 @@
             <p id='error'>Login failed.</p>
         </c:if>
 
-        <h2>PhotoBlog Login</h2>
+        <h2 style="font-family: 'Arvo', serif;">PhotoBlog Login</h2>
 
         <div class="input-box">
             <form action="login" method="POST">
