@@ -104,7 +104,7 @@
 			transition: all 0.1s ease 0s;
         }
 
-        .forgot_pw{
+		.guest-login-btn{
             float: left;
         }
         #registration{
@@ -141,11 +141,14 @@
                 <br/>
 
                 <div class="bottom">
-                    <a id="forgot_password_link" class="forgot_pw"
-                       href="/forgot">Forgot password？</a>
+                    <a href="/blog/list" class="guest-login-btn">Guest visit</a>
 
                     <a href="/No_OT/register" id="registration" >Sign in</a>
                 </div>
+                <br/>
+
+
+
             </form>
         </div>
     </div>
