@@ -13,6 +13,7 @@ public class UserManagementService {
     @Resource
     private BlogUserRepository buRepo;
 
+
     @Transactional
     public List<BlogUser> getBlogUsers() {
         return buRepo.findAll();
@@ -28,8 +29,8 @@ public class UserManagementService {
     }
 
     @Transactional
-    public void createBlogUser(String username, String password, String[] roles) {
-        BlogUser user = new BlogUser(username, password, roles);
+    public void saveUser(BlogUser user) {
         buRepo.save(user);
     }
+
 }

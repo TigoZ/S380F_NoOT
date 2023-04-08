@@ -144,7 +144,7 @@
                     <a id="forgot_password_link" class="forgot_pw"
                        href="/forgot">Forgot password？</a>
 
-                    <a href="/registration" id="registration" >Sign in</a>
+                    <a href="/No_OT/register" id="registration" >Sign in</a>
                 </div>
             </form>
         </div>

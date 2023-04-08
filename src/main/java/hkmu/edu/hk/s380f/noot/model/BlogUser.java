@@ -8,23 +8,35 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class BlogUser {
+
     @Id
     private String username;
     private String password;
+    private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blog> blogs = new ArrayList<>();
-    public BlogUser() {}
-    public BlogUser(String username, String password, String[] roles) {
+
+    public BlogUser(String username, String password, String[] roles, String email, String phoneNumber) {
         this.username = username;
-        this.password = "{noop}" + password;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         for (String role : roles) {
             this.roles.add(new UserRole(this, role));
         }
     }
-    // getters and setters of all properties
+
+    public BlogUser() {
+
+    }
 
     public String getUsername() {
         return username;
@@ -56,5 +68,21 @@ public class BlogUser {
 
     public void setBlogs(List<Blog> blogs) {
         this.blogs = blogs;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

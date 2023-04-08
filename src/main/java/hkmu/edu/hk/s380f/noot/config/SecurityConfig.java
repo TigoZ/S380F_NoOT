@@ -19,8 +19,10 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers("/blog/delete/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/No_OT/register").permitAll()
                         .anyRequest().permitAll()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?error")

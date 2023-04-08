@@ -59,8 +59,6 @@
 
     <h2>Users</h2>
 
-    <a href="<c:url value="/user/create" />">Create a User</a><br/><br/>
-
     <c:choose>
         <c:when test="${fn:length(blogUsers) == 0}">
             <i>There are no users in the system.</i>
@@ -71,6 +69,8 @@
                     <th>Username</th>
                     <th>Password</th>
                     <th>Roles</th>
+                    <th>Email</th>
+                    <th>phone_number</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach items="${blogUsers}" var="user">
@@ -83,6 +83,8 @@
                                 ${role.role}
                             </c:forEach>
                         </td>
+                        <td>${user.email}</td>
+                        <td>${user.phoneNumber}</td>
                         <td>
                             [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
                         </td>

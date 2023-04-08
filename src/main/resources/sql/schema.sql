@@ -22,24 +22,25 @@ create table if not exists attachment
     primary key (id),
     foreign key (blog_id) references blog
 );
-
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
-CREATE TABLE users
-(
-    create_time timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    update_time timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    username    VARCHAR(50)  NOT NULL,
-    password    VARCHAR(50)  NOT NULL,
-    PRIMARY KEY (username)
+
+CREATE TABLE users (
+                       create_time TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                       update_time TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                       username VARCHAR(50) NOT NULL,
+                       password VARCHAR(50) NOT NULL,
+                       email VARCHAR(255) NOT NULL,
+                       phone_number VARCHAR(20) NOT NULL,
+                       PRIMARY KEY (username)
 );
-CREATE TABLE IF NOT EXISTS user_roles
-(
-    create_time  timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    update_time  timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    user_role_id INTEGER GENERATED ALWAYS AS IDENTITY,
-    username     VARCHAR(50)  NOT NULL,
-    role         VARCHAR(50)  NOT NULL,
-    PRIMARY KEY (user_role_id),
-    FOREIGN KEY (username) REFERENCES users (username)
+
+CREATE TABLE IF NOT EXISTS user_roles (
+                                          create_time TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                                          update_time TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                                          user_role_id INTEGER GENERATED ALWAYS AS IDENTITY,
+                                          username VARCHAR(50) NOT NULL,
+                                          role VARCHAR(50) NOT NULL,
+                                          PRIMARY KEY (user_role_id),
+                                          FOREIGN KEY (username) REFERENCES users (username)
 );
