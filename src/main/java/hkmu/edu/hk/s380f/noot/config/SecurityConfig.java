@@ -4,7 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -19,7 +22,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers("/blog/delete/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/No_OT/register").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .anyRequest().permitAll()
                 )
 
@@ -41,4 +44,5 @@ public class SecurityConfig {
                 .httpBasic(withDefaults());
         return http.build();
     }
+
 }

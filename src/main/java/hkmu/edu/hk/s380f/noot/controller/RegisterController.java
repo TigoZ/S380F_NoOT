@@ -2,20 +2,25 @@ package hkmu.edu.hk.s380f.noot.controller;
 
 import hkmu.edu.hk.s380f.noot.dao.UserManagementService;
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
+import hkmu.edu.hk.s380f.noot.model.UserRole;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.IOException;
 
 @Controller
 public class RegisterController {
 
     @Resource
     UserManagementService umService;
+
+
+
 
     @GetMapping("/register")
     public ModelAndView showRegisterForm() {
@@ -26,10 +31,23 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String processRegistration(@ModelAttribute BlogUser user) {
+        UserRole defaultRole = new UserRole();
+        defaultRole.setUser(user);
+        defaultRole.setRole("ROLE_USER");
+
+        List<UserRole> userRoles = new ArrayList<>();
+        userRoles.add(defaultRole);
+        user.setRoles(userRoles);
+
+        // Add the {noop} prefix before the password
+        user.setPassword("{noop}" + user.getPassword());
+
         umService.saveUser(user);
 
-        // 注册成功后，将用户重定向到登录页面。
         return "redirect:/login";
     }
+
+
+
 
 }

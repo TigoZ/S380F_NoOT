@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Table(name = "users")
 public class BlogUser {
@@ -23,6 +24,7 @@ public class BlogUser {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blog> blogs = new ArrayList<>();
+
 
     public BlogUser(String username, String password, String[] roles, String email, String phoneNumber) {
         this.username = username;
