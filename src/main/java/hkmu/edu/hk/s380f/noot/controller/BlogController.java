@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.io.IOException;
 import java.security.Principal;
@@ -75,7 +77,7 @@ public class BlogController {
             this.attachments = attachments;
         }
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/create")
     public View create(Form form, Principal principal) throws IOException {
         long blogId = bService.createBlog(principal.getName(),
@@ -113,6 +115,7 @@ public class BlogController {
         return new ResponseEntity<>(attachment.getContents(), headers, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/delete/{blogId}")
     public String deleteBlog(@PathVariable("blogId") long blogId)
             throws BlogNotFound {
@@ -120,6 +123,7 @@ public class BlogController {
         return "redirect:/blog/list";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/{blogId}/delete/{attachment:.+}")
     public String deleteAttachment(@PathVariable("blogId") long blogId,
                                    @PathVariable("attachment") UUID attachmentId)
@@ -128,6 +132,7 @@ public class BlogController {
         return "redirect:/blog/view/" + blogId;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/edit/{blogId}")
     public ModelAndView showEdit(@PathVariable("blogId") long blogId,
                                  Principal principal, HttpServletRequest request)

@@ -48,16 +48,21 @@
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/blog/create' />">Create a Blog</a>
-    <c:url var="logoutUrl" value="/logout"/>
-    <a href="/logout" id="logout">Log out</a>
-    <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+        <a href="<c:url value='/blog/create' />">Create a Blog</a>
+        <c:url var="logoutUrl" value="/logout"/>
+        <a href="/logout" id="logout">Log out</a>
+        <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </security:authorize>
+    <security:authorize access="isAnonymous()">
+        <a href="<c:url value='/login' />">Log in</a>
+    </security:authorize>
 </div>
 
 <div class="content">
     <h2>Photo Blog #${blogId}: <c:out value="${blog.subject}"/></h2>
     <security:authorize access="hasRole('ADMIN') or
-                          principal.username=='${blog.customerName}'">
+                          principal=='${blog.customerName}'">
         [<a href="<c:url value="/blog/edit/${blog.id}"/>">Edit</a>]
     </security:authorize>
     <security:authorize access="hasRole('ADMIN')">
@@ -77,7 +82,8 @@
             <c:if test="${not status.first}">, </c:if>
             <a href="<c:url value='/blog/${blogId}/attachment/${attachment.id}'/>">
                 <c:out value="${attachment.name}"/><br>
-                <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>" alt="${attachment.name}"/><br>
+                <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>"
+                     alt="${attachment.name}"/><br>
             </a>
             [<a href="<c:url value='/blog/${blogId}/delete/${attachment.id}'/>">Delete</a>]
         </c:forEach><br/><br/>

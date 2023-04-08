@@ -44,14 +44,19 @@
 <body>
 
 <div class="nav">
-    <h2>Blogs</h2>
+    <h2>Photo Blog</h2>
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/blog/create' />">Create a Blog</a>
-    <c:url var="logoutUrl" value="/logout"/>
-    <a href="/logout" id="logout">Log out</a>
-    <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+        <a href="<c:url value='/blog/create' />">Create a Blog</a>
+        <c:url var="logoutUrl" value="/logout"/>
+        <a href="/logout" id="logout">Log out</a>
+        <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </security:authorize>
+    <security:authorize access="isAnonymous()">
+        <a href="<c:url value='/login' />">Log in</a>
+    </security:authorize>
 </div>
 
 <div class="content">
