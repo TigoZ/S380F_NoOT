@@ -16,7 +16,7 @@
 			left: 0;
 			overflow-x: hidden;
 			padding-top: 20px;
-			border-right: 1px solid rgb(176, 170, 170);
+			border-right: 1px solid rgba(222, 211, 211, 0.55);
 			float: left;
 			font-size: 30px;
 		}
@@ -37,12 +37,12 @@
 		}
 
 		.nav_content {
-			height: 100%;
+			height: 80%;
 		}
 
 		#logout {
 			position: relative;
-			margin-top: 165%;
+			margin-top: 140%;
 		}
 
 		.title {
@@ -52,10 +52,16 @@
 		}
 
 		.content {
-			margin: auto;
-			max-width: 800px;
+			margin: 0 400px;
+			max-width: 900px;
 			padding: 20px;
 			font-size: 25px;
+		}
+
+		.return {
+			text-decoration: none;
+			float: right;
+			font-size: 22px;
 		}
 
     </style>
@@ -95,8 +101,9 @@
         <input type="file" name="attachments" multiple="multiple"/><br/><br/>
         <input type="submit" value="Save"/><br/><br/>
     </form:form>
-    <a href="<c:url value="/blog" />">Return to Home page</a>
+
 </div>
+<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
 
 <script>

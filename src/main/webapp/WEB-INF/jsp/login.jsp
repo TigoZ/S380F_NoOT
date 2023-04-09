@@ -102,6 +102,10 @@
         a{
 			text-decoration: none;
 			transition: all 0.1s ease 0s;
+			color: rgb(84, 105, 141);
+        }
+        a:active{
+			color: rgb(84, 105, 141);
         }
 
 		.forgot{
@@ -142,7 +146,7 @@
                 <br/>
 
                 <div class="bottom">
-                    <a href="/forgot_pw" class="forgot">Forgot Password?</a>
+                    <a href="/No_OT/forgot_password" class="forgot">Forgot Password?</a>
                     <a href="/No_OT/register" id="registration" >Sign in</a>
                 </div>
                 <br/>

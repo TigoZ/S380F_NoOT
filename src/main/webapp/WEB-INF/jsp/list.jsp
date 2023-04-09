@@ -16,19 +16,20 @@
 			left: 0;
 			overflow-x: hidden;
 			padding-top: 20px;
-			border-right: 1px solid rgb(176, 170, 170);
+			border-right: 1px solid rgba(222, 211, 211, 0.55);
 			float: left;
 			font-size: 30px;
 		}
 
 
-		.nav_content {
-			height: 100%;
+
+		.nav_content{
+			height: 80%;
 		}
 
 		#logout {
 			position: relative;
-			margin-top: 165%;
+			margin-top: 140%;
 		}
 
 		.nav_content a {
@@ -52,8 +53,8 @@
         }
 
 		.content {
-			margin: auto;
-			max-width: 800px;
+			margin: 0 400px;
+			max-width: 900px;
 			padding: 20px;
 			font-size: 25px;
 		}

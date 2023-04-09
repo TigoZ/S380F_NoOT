@@ -34,10 +34,14 @@
 			color: #101e2d;
 			font-size: 50px;
 			padding-bottom: 40px;
+			font-family: 'Arvo', serif;
 		}
 
 		.text {
 			font-size: 20px;
+			color: rgb(84, 105, 141);
+			margin: 0px 0px 8px;
+			line-height: inherit;
 		}
 
 		.register-box {
@@ -90,7 +94,11 @@
 		a{
 			text-decoration: none;
 			transition: all 0.1s ease 0s;
+			color: rgb(84, 105, 141);
 		}
+        a:active{
+			color: rgb(84, 105, 141);
+        }
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Arvo" rel="stylesheet">
@@ -99,7 +107,7 @@
 <div class="main">
     <div class="register-box">
 
-        <h2 style="font-family: 'Arvo', serif;">Register</h2>
+        <h2>Register</h2>
 
         <div class="input-box">
             <form:form method="POST" modelAttribute="user">

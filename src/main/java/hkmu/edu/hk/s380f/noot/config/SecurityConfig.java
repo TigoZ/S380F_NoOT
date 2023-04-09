@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
@@ -18,17 +20,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
-        http
+        http// Add this line to disable CSRF protection
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").permitAll()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/forgot_password").permitAll()
                         .anyRequest().permitAll()
                 )
 
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/blog", true) // 修改此处的URL以将其设置为您希望在登录成功后导航到的页面
+                        .defaultSuccessUrl("/blog", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )
@@ -45,5 +48,6 @@ public class SecurityConfig {
                 .httpBasic(withDefaults());
         return http.build();
     }
+
 
 }

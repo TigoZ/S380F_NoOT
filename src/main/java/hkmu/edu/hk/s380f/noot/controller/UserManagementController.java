@@ -1,15 +1,12 @@
 package hkmu.edu.hk.s380f.noot.controller;
 
+
 import hkmu.edu.hk.s380f.noot.dao.UserManagementService;
-import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/user")
@@ -17,11 +14,13 @@ public class UserManagementController {
     @Resource
     UserManagementService umService;
 
+
     @GetMapping({"", "/", "/list"})
     public String list(ModelMap model) {
         model.addAttribute("blogUsers", umService.getBlogUsers());
         return "listUser";
     }
+
     public static class Form {
         private String username;
         private String password;

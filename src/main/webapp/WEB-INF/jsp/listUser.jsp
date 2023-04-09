@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Photo Blog User Management</title>
+
     <style>
 		* {
 			padding: 10px;
@@ -16,10 +17,11 @@
 			left: 0;
 			overflow-x: hidden;
 			padding-top: 20px;
-			border-right: 1px solid rgb(176, 170, 170);
+			border-right: 1px solid rgba(222, 211, 211, 0.55);
 			float: left;
 			font-size: 30px;
 		}
+
 
 
 		.nav_content a {
@@ -42,21 +44,27 @@
 			display: block;
 		}
 
-		.nav_content {
-			height: 100%;
+		.nav_content{
+			height: 80%;
 		}
 
 		#logout {
 			position: relative;
-			margin-top: 165%;
+			margin-top: 140%;
 		}
 
 		.content {
-			margin: auto;
-			max-width: 800px;
+			margin: 0 400px;
+			max-width: 900px;
 			padding: 20px;
-			font-size: 25px;
+			font-size: 22px;
 		}
+
+        .return{
+			text-decoration: none;
+			float: right;
+			font-size: 22px;
+        }
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
@@ -86,7 +94,6 @@
 </div>
 
 <div class="content">
-    <a href="<c:url value="/blog" />">Return to Home page</a>
 
     <h2>Users</h2>
 
@@ -101,7 +108,7 @@
                     <th>Password</th>
                     <th>Roles</th>
                     <th>Email</th>
-                    <th>phone_number</th>
+                    <th>Phone_Number</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach items="${blogUsers}" var="user">
@@ -117,7 +124,7 @@
                         <td>${user.email}</td>
                         <td>${user.phoneNumber}</td>
                         <td>
-                            [<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]
+                            [<a href="<c:url value="/user/delete/${user.username}" />" class="action">Delete</a>]
                         </td>
                     </tr>
                 </c:forEach>
@@ -125,6 +132,7 @@
         </c:otherwise>
     </c:choose>
 </div>
+<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
 
 <script>
