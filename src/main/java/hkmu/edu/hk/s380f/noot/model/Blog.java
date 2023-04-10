@@ -1,26 +1,38 @@
 package hkmu.edu.hk.s380f.noot.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Ticket {
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "name")
+    @Column(name = "name" ,insertable=false, updatable=false)
     private String customerName;
+    @ManyToOne
+    @JoinColumn(name = "name")
+    private BlogUser customer;
     private String subject;
     private String body;
+    @CreationTimestamp
+    private Date createTime;
+    @UpdateTimestamp
+    private Date updateTime;
 
-    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "blog", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
+
+
 
     // getters and setters of all properties
     public long getId() {
@@ -64,9 +76,31 @@ public class Ticket {
     }
 
     public void deleteAttachment(Attachment attachment) {
-        attachment.setTicket(null);
+        attachment.setBlog(null);
         this.attachments.remove(attachment);
     }
+
+    public BlogUser getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(BlogUser customer) {
+        this.customer = customer;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }
-
-

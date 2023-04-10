@@ -1,7 +1,7 @@
 package hkmu.edu.hk.s380f.noot.dao;
 
 
-import hkmu.edu.hk.s380f.noot.model.TicketUser;
+import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import hkmu.edu.hk.s380f.noot.model.UserRole;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,21 +16,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TicketUserService implements UserDetailsService {
+public class BlogUserService implements UserDetailsService {
     @Resource
-    TicketUserRepository ticketUserRepo;
+    BlogUserRepository blogUserRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        TicketUser ticketUser = ticketUserRepo.findById(username).orElse(null);
-        if (ticketUser == null) {
+        BlogUser blogUser = blogUserRepo.findById(username).orElse(null);
+        if (blogUser == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found.");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserRole role : ticketUser.getRoles()) {
+        for (UserRole role : blogUser.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
-        return new User(ticketUser.getUsername(), ticketUser.getPassword(), authorities);
+        return new User(blogUser.getUsername(), blogUser.getPassword(), authorities);
     }
 }

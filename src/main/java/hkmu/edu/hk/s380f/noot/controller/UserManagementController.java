@@ -1,16 +1,12 @@
 package hkmu.edu.hk.s380f.noot.controller;
 
+
 import hkmu.edu.hk.s380f.noot.dao.UserManagementService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/user")
@@ -18,9 +14,10 @@ public class UserManagementController {
     @Resource
     UserManagementService umService;
 
+
     @GetMapping({"", "/", "/list"})
     public String list(ModelMap model) {
-        model.addAttribute("ticketUsers", umService.getTicketUsers());
+        model.addAttribute("blogUsers", umService.getBlogUsers());
         return "listUser";
     }
 
@@ -28,8 +25,26 @@ public class UserManagementController {
         private String username;
         private String password;
         private String[] roles;
-
+        private String email;
+        private String phoneNumber;
         // getters and setters for all properties
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+
         public String getUsername() {
             return username;
         }
@@ -55,21 +70,12 @@ public class UserManagementController {
         }
     }
 
-    @GetMapping("/create")
-    public ModelAndView create() {
-        return new ModelAndView("addUser", "ticketUser", new Form());
-    }
-
-    @PostMapping("/create")
-    public String create(Form form) throws IOException {
-        umService.createTicketUser(form.getUsername(),
-                form.getPassword(), form.getRoles());
-        return "redirect:/user/list";
-    }
-
     @GetMapping("/delete/{username}")
-    public String deleteTicket(@PathVariable("username") String username) {
+    public String deleteBlog(@PathVariable("username") String username) {
         umService.delete(username);
         return "redirect:/user/list";
     }
+
+
+
 }

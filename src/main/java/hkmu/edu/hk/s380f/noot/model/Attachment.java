@@ -23,12 +23,9 @@ public class Attachment {
     @Lob
     private byte[] contents;
 
-    @Column(name = "ticket_id", insertable=false, updatable=false)
-    private long ticketId;
-
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "blog_id")
+    private Blog blog;
 
     // getters and setters of all properties
     public UUID getId() {
@@ -63,20 +60,13 @@ public class Attachment {
         this.contents = contents;
     }
 
-    public long getTicketId() {
-        return ticketId;
+    public Blog getBlog() {
+        return blog;
     }
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
 }
 
