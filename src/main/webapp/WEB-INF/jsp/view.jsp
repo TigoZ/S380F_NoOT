@@ -21,7 +21,6 @@
 			font-size: 30px;
 		}
 
-
 		.nav_content {
 			height: 80%;
 		}
@@ -55,12 +54,56 @@
 			margin: 0 400px;
 			max-width: 900px;
 			padding: 20px;
-			font-size: 25px;
+			font-size: 22px;
 		}
-		.return{
+
+		.return {
 			text-decoration: none;
 			float: right;
 			font-size: 22px;
+		}
+
+		.image-container {
+			max-width: 100%;
+		}
+
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.modal-content {
+			position: relative;
+			margin: 10% auto;
+			padding: 20px;
+			width: 80%;
+			max-width: 800px;
+			background-color: #fff;
+			border: 1px solid #888;
+		}
+
+		.modal-image {
+			display: block;
+			max-width: 100%;
+			max-height: 100%;
+			margin: auto;
+		}
+
+		.close {
+			position: absolute;
+			top: 0;
+			right: 5px;
+			color: #aaa;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
 		}
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
@@ -72,15 +115,15 @@
         Blog</a></h2>
     <div class="nav_content">
         <security:authorize access="hasRole('ADMIN')">
-            <br/>
-            <a href="<c:url value='/user' />">Manage User Accounts</a>
+        <br/>
+        <a href="<c:url value='/user' />">Manage User Accounts</a>
         </security:authorize>
         <security:authorize access="hasAnyRole('USER', 'ADMIN')">
-            <a href="<c:url value='/blog/create' />">Create a Blog</a>
+        <a href="<c:url value='/blog/create' />">Create a Blog</a>
             <c:url var="logoutUrl" value="/logout"/>
-            <a href="/logout" id="logout">Log out</a>
-            <input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
-                   value="${_csrf.token}"/>
+        <a href="/logout" id="logout">Log out</a>
+        <input type="hidden" id="csrfToken             name="${_csrf.parameterName}"
+            value="${_csrf.token}"/>
         </security:authorize>
         <security:authorize access="isAnonymous()">
             <br/><br/>
@@ -110,21 +153,39 @@
         Attachments:
         <c:forEach items="${blog.attachments}" var="attachment" varStatus="status">
             <c:if test="${not status.first}">, </c:if>
-            <a href="<c:url value='/blog/${blogId}/attachment/${attachment.id}'/>">
+            <a href="javascript:void(0);" onclick="openModal('${attachment.id}')" class="image-link">
                 <c:out value="${attachment.name}"/><br>
-                <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>"
-                     alt="${attachment.name}"/><br>
+                <div class="image-container">
+                    <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>"
+                         alt="${attachment.name}" style="max-width: 100%;"/>
+                </div>
             </a>
             [<a href="<c:url value='/blog/${blogId}/delete/${attachment.id}'/>">Delete</a>]
+            <div id="modal-${attachment.id}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('${attachment.id}')">&times;</span>
+                    <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>" class="modal-image" alt="${attachment.name}"/>
+                </div>
+            </div>
         </c:forEach><br/><br/>
-    </c:if>
 
+    </c:if>
 
 </div>
 <a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
 
 <script>
+    function openModal(id) {
+        var modal = document.getElementById('modal-' + id);
+        modal.style.display = "block";
+    }
+
+    function closeModal(id) {
+        var modal = document.getElementById('modal-' + id);
+        modal.style.display = "none";
+    }
+
     document.getElementById('logout').addEventListener('click', function (event) {
         event.preventDefault();
 
@@ -137,7 +198,8 @@
 
         xhr.onload = function () {
             if (xhr.status === 200 || xhr.status === 204) {
-                // Redirect to the desired page after successful logout
+    // Redirect to the desired page after successful
+                logout
                 window.location.href = '/No_OT';
             } else {
                 // Handle error if needed
@@ -152,6 +214,8 @@
 
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
+
 </script>
 
 </html>
+

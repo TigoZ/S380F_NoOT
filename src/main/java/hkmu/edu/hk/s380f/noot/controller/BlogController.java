@@ -96,14 +96,15 @@ public class BlogController {
         return "view";
     }
 
-    @GetMapping("/{blogId}/attachment/{attachment:.+}")
-    public View download(@PathVariable("blogId") long blogId,
-                         @PathVariable("attachment") UUID attachmentId)
-            throws BlogNotFound, AttachmentNotFound {
-        Attachment attachment = bService.getAttachment(blogId, attachmentId);
-        return new DownloadingView(attachment.getName(),
-                attachment.getMimeContentType(), attachment.getContents());
-    }
+//    @GetMapping("/{blogId}/attachment/{attachment:.+}")
+//    public View download(@PathVariable("blogId") long blogId,
+//                         @PathVariable("attachment") UUID attachmentId)
+//            throws BlogNotFound, AttachmentNotFound {
+//        Attachment attachment = bService.getAttachment(blogId, attachmentId);
+//        return new DownloadingView(attachment.getName(),
+//                attachment.getMimeContentType(), attachment.getContents());
+//    }
+
     @GetMapping("/{blogId}/image/{attachment:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
                                            @PathVariable("attachment") UUID attachmentId)
@@ -114,6 +115,7 @@ public class BlogController {
         headers.setContentDispositionFormData(attachment.getName(), attachment.getName());
         return new ResponseEntity<>(attachment.getContents(), headers, HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/delete/{blogId}")
