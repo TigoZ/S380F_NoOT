@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
-        http// Add this line to disable CSRF protection
+        http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").permitAll()
