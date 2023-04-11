@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="Changes(show attachment content">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/TicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/TicketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="able to show image" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +148,7 @@
       <workItem from="1680439373611" duration="91000" />
       <workItem from="1680537135891" duration="927000" />
       <workItem from="1680540953920" duration="2810000" />
-      <workItem from="1680585945302" duration="17542000" />
+      <workItem from="1680585945302" duration="17844000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1680437545345</created>
@@ -175,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680601629195</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="able to show image">
+      <created>1680619142082</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680619142082</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +199,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Changes(show attachment content" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes(show attachment content" />
+    <MESSAGE value="able to show image" />
+    <option name="LAST_COMMIT_MESSAGE" value="able to show image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
