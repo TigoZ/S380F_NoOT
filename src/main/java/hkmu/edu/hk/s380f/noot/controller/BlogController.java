@@ -95,8 +95,7 @@ public class BlogController {
         model.addAttribute("blog", blog);
         return "view";
     }
-
-<<<<<<< HEAD
+    
     @GetMapping("/{blogId}/attachment/{attachment:.+}")
     public View download(@PathVariable("blogId") long blogId,
                          @PathVariable("attachment") UUID attachmentId)
@@ -105,7 +104,7 @@ public class BlogController {
         return new DownloadingView(attachment.getName(),
                 attachment.getMimeContentType(), attachment.getContents());
     }
-=======
+
 //    @GetMapping("/{blogId}/attachment/{attachment:.+}")
 //    public View download(@PathVariable("blogId") long blogId,
 //                         @PathVariable("attachment") UUID attachmentId)
@@ -114,7 +113,7 @@ public class BlogController {
 //        return new DownloadingView(attachment.getName(),
 //                attachment.getMimeContentType(), attachment.getContents());
 //    }
->>>>>>> 03bc3b82253e60d26ed1b785e5eb463a9d878ef8
+
 
     @GetMapping("/{blogId}/image/{attachment:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
