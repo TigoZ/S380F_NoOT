@@ -104,6 +104,7 @@ public class BlogController {
         return new DownloadingView(attachment.getName(),
                 attachment.getMimeContentType(), attachment.getContents());
     }
+
     @GetMapping("/{blogId}/image/{attachment:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
                                            @PathVariable("attachment") UUID attachmentId)
