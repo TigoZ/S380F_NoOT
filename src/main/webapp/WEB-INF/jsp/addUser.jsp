@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Support</title>
+    <title>Photo Blog</title>
     <style>
 		* {
 			padding: 10px;
@@ -17,7 +17,7 @@
 			overflow-x: hidden;
 			padding-top: 20px;
 			border-right: 1px solid rgb(176, 170, 170);
-			float: left; /* 添加float:left属性 */
+			float: left;
 		}
 
 		.nav a {
@@ -48,7 +48,7 @@
     <security:authorize access="hasRole('ADMIN')">
         <a href="<c:url value='/user' />">Manage User Accounts</a>
     </security:authorize>
-    <a href="<c:url value='/ticket/create' />">Create a Ticket</a>
+    <a href="<c:url value='/blog/create' />">Create a Ticket</a>
     <c:url var="logoutUrl" value="/logout"/>
     <a href="/logout" id="logout">Log out</a>
     <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
