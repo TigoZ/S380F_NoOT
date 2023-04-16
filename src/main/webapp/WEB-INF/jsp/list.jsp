@@ -21,9 +21,7 @@
 			font-size: 30px;
 		}
 
-
-
-		.nav_content{
+		.nav_content {
 			height: 80%;
 		}
 
@@ -46,11 +44,11 @@
 			color: white;
 		}
 
-        .title{
+		.title {
 			text-decoration: none;
 			color: #000;
 			display: block;
-        }
+		}
 
 		.content {
 			margin: 0 400px;
@@ -58,7 +56,6 @@
 			padding: 20px;
 			font-size: 25px;
 		}
-
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
@@ -84,8 +81,8 @@
             <a href="<c:url value='/login' />">Log in</a>
         </security:authorize>
     </div>
-</div>
 
+</div>
 <div class="content">
     <c:choose>
         <c:when test="${fn:length(blogDatabase) == 0}">
@@ -96,7 +93,7 @@
                 Blog ${entry.id}:
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
-                (customer: <c:out value="${entry.customerName}"/>)
+                (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
                 <security:authorize access="hasRole('ADMIN') or
                                 principal=='${entry.customerName}'">
                     [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
@@ -104,12 +101,22 @@
                 <security:authorize access="hasRole('ADMIN')">
                     [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
                 </security:authorize>
+                <c:if test="${not empty entry.attachments}">
+                    <div style="display: inline-block; padding: 5px;">
+                        <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
+                            <c:if test="${status.index < 1}">
+                                <img src="<c:url value='/blog/${entry.id}/image/${attachment.id}'/>"
+                                     alt="${attachment.name}"
+                                     style="max-width: 300px; max-height: 300px;"/>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </c:if>
                 <br/>
             </c:forEach>
         </c:otherwise>
     </c:choose>
 </div>
-
 <script>
     document.getElementById('logout').addEventListener('click', function (event) {
         event.preventDefault();
@@ -138,9 +145,6 @@
 
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
-</script>
-
-
 </script>
 </body>
 </html>

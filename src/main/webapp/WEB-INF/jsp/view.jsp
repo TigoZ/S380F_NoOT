@@ -115,14 +115,14 @@
         Blog</a></h2>
     <div class="nav_content">
         <security:authorize access="hasRole('ADMIN')">
-        <br/>
-        <a href="<c:url value='/user' />">Manage User Accounts</a>
+            <br/>
+            <a href="<c:url value='/user' />">Manage User Accounts</a>
         </security:authorize>
         <security:authorize access="hasAnyRole('USER', 'ADMIN')">
-        <a href="<c:url value='/blog/create' />">Create a Blog</a>
+            <a href="<c:url value='/blog/create' />">Create a Blog</a>
             <c:url var="logoutUrl" value="/logout"/>
-        <a href="/logout" id="logout">Log out</a>
-        <input type="hidden" id="csrfToken             name="${_csrf.parameterName}"
+            <a href="/logout" id="logout">Log out</a>
+            <input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
             value="${_csrf.token}"/>
         </security:authorize>
         <security:authorize access="isAnonymous()">
@@ -153,18 +153,19 @@
         Attachments:
         <c:forEach items="${blog.attachments}" var="attachment" varStatus="status">
             <c:if test="${not status.first}">, </c:if>
-            <a href="javascript:void(0);" onclick="openModal('${attachment.id}')" class="image-link">
+            <a href="javascript:void(0);" onclick="openModal('${attachment.id}')"
+               class="image-link">
                 <c:out value="${attachment.name}"/><br>
                 <div class="image-container">
                     <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>"
                          alt="${attachment.name}" style="max-width: 100%;"/>
                 </div>
             </a>
-            [<a href="<c:url value='/blog/${blogId}/delete/${attachment.id}'/>">Delete</a>]
             <div id="modal-${attachment.id}" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeModal('${attachment.id}')">&times;</span>
-                    <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>" class="modal-image" alt="${attachment.name}"/>
+                    <img src="<c:url value='/blog/${blogId}/image/${attachment.id}'/>"
+                         class="modal-image" alt="${attachment.name}"/>
                 </div>
             </div>
         </c:forEach><br/><br/>
@@ -198,7 +199,7 @@
 
         xhr.onload = function () {
             if (xhr.status === 200 || xhr.status === 204) {
-    // Redirect to the desired page after successful
+                // Redirect to the desired page after successful
                 logout
                 window.location.href = '/No_OT';
             } else {
