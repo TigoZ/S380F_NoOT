@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Entity
 public class Comment {
+    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,14 +25,6 @@ public class Comment {
     private String commenter;
 
     // constructor, getters and setters, and other properties omitted for brevity
-
-    public void setUser(BlogUser user) {
-        this.user = user;
-    }
-
-    public void setBlog(Blog blog) {
-        this.blog = blog;
-    }
 
     public Long getId() {
         return id;
@@ -53,8 +46,16 @@ public class Comment {
         return user;
     }
 
+    public void setUser(BlogUser user) {
+        this.user = user;
+    }
+
     public Blog getBlog() {
         return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 
     public String getCommenter() {
