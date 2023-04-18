@@ -186,6 +186,12 @@ public class BlogController {
         return "redirect:/blog/view/" + blogId;
     }
 
+    @PostMapping("/comment/{blogId}")
+    public String saveComment(@PathVariable long blogId, @RequestParam String username, @RequestParam String content) {
+        bService.saveComment(blogId, username, content);
+        return "redirect:/blog/view/" + blogId;
+    }
+
 
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})
