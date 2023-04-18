@@ -33,7 +33,8 @@ public class Blog {
     private List<Attachment> attachments = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments;
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Comment> comments = new ArrayList<>();
 
 
 

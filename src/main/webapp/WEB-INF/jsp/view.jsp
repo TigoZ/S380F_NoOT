@@ -176,15 +176,17 @@
         <form action="<c:url value='/blog/comment/${blogId}'/>" method="post">
 
             <input type="text" name="content" placeholder="add your comment" />
+            <input type="hidden" name="username" value="${blog.customerName}" />
+            <input type="hidden" name="blogId" value="${blogId}" />
             <button type="submit">submit</button>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
     </security:authorize>
 
-    <c:if test="${not empty entry.comments}">
+    <c:if test="${not empty blog.comments}">
         <h4>comment:</h4>
         <ul>
-            <c:forEach items="${entry.comments}" var="comment">
+            <c:forEach items="${blog.comments}" var="comment">
                 <li>${comment.user}: ${comment.content}</li>
             </c:forEach>
         </ul>
