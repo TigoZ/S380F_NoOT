@@ -56,6 +56,40 @@
 			padding: 20px;
 			font-size: 25px;
 		}
+
+		 .modal {
+			 display: none;
+			 position: fixed;
+			 z-index: 1;
+			 left: 0;
+			 top: 0;
+			 width: 100%;
+			 height: 100%;
+			 overflow: hidden;
+			 background-color: rgba(0, 0, 0, 0.8);
+		 }
+
+		.modal-content {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			padding: 20px;
+			width: 80%;
+			max-width: 700px;
+			max-height: 80%;
+			object-fit: contain;
+		}
+		.close {
+			color: white;
+			font-size: 28px;
+			font-weight: bold;
+			position: absolute;
+			right: 20px;
+			top: 0;
+			cursor: pointer;
+		}
+
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
@@ -100,13 +134,18 @@
                     <div style="display: inline-block; padding: 5px;">
                         <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
                             <c:if test="${status.index < 1}">
+                                <!-- 添加data-id属性和click事件监听器 -->
                                 <img src="<c:url value='/blog/${entry.id}/image/${attachment.id}'/>"
                                      alt="${attachment.name}"
-                                     style="max-width: 300px; max-height: 300px;"/>
+                                     style="max-width: 300px; max-height: 300px;"
+                                     data-id="${attachment.id}"
+                                     onclick="event.stopPropagation(); openModal(event);"/>
+
                             </c:if>
                         </c:forEach>
-                    </div><br/>
+                    </div>
                 </c:if>
+
                 <security:authorize access="hasRole('ADMIN') or
                                 principal=='${entry.customerName}'">
                     [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
@@ -119,6 +158,29 @@
         </c:otherwise>
     </c:choose>
 </div>
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal();">&times;</span>
+    <img class="modal-content" id="imgModal">
+</div>
+
+<script>
+    var modal = document.getElementById('myModal');
+    var modalImg = document.getElementById('imgModal');
+
+    function openModal(event) {
+        var img = event.target;
+        var attachmentId = img.getAttribute('data-id');
+        var entryId = img.src.split('/')[5];
+
+        modal.style.display = 'block';
+        modalImg.src = '/No_OT/blog/' + entryId + '/image/' + attachmentId;
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+</script>
+
 <script>
     document.getElementById('logout').addEventListener('click', function (event) {
         event.preventDefault();
@@ -147,16 +209,6 @@
 
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
-
-    function openModal(id) {
-        var modal = document.getElementById('modal-' + id);
-        modal.style.display = "block";
-    }
-
-    function closeModal(id) {
-        var modal = document.getElementById('modal-' + id);
-        modal.style.display = "none";
-    }
 </script>
 </body>
 </html>

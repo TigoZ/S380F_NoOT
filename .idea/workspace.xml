@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="profile">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/profile.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/28a24c97-4429-4aad-9e58-1d5ec79af10d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/28a24c97-4429-4aad-9e58-1d5ec79af10d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/BlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/BlogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/BlogUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/BlogUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/add.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/addUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/addUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/edit.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/error.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/error.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listUser.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +164,7 @@
       <workItem from="1681201563078" duration="5050000" />
       <workItem from="1681633010648" duration="77000" />
       <workItem from="1681814442152" duration="22000" />
-      <workItem from="1681824515044" duration="7186000" />
+      <workItem from="1681824515044" duration="10264000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1680437545345</created>
@@ -247,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681827244939</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="profile">
+      <created>1681834306624</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681834306624</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
