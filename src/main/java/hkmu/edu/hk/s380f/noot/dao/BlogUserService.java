@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,10 @@ public class BlogUserService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return new User(blogUser.getUsername(), blogUser.getPassword(), authorities);
+    }
+
+    @Transactional(readOnly = true)
+    public BlogUser findByUsername(String username) {
+        return blogUserRepo.findById(username).orElse(null);
     }
 }

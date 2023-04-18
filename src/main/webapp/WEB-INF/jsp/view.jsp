@@ -171,47 +171,25 @@
         </c:forEach><br/><br/>
 
     </c:if>
-    <!-- comment section -->
-    <h2>Comments</h2>
 
-    <!-- display existing comments -->
-    <c:forEach var="comment" items="${blog.comments}">
-        <div class="comment">
-            <p><strong>${comment.commenter}</strong> said:</p>
-            <p>${comment.text}</p>
-        </div>
-    </c:forEach>
+    <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+        <form action="<c:url value='/blog/comment/${blogId}'/>" method="post">
 
-    <!-- comment section -->
-    <h2>Comments</h2>
-
-    <!-- display existing comments -->
-    <c:forEach var="comment" items="${blog.comments}">
-        <div class="comment">
-            <p><strong>${comment.commenter}</strong> said:</p>
-            <p>${comment.text}</p>
-        </div>
-    </c:forEach>
-
-    <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
-
-        <!-- add a new comment -->
-        <h3>Add a comment</h3>
-        <form action="${pageContext.request.contextPath}/blog/${blog.id}/comment" method="post">
-            <div>
-                <label for="text">Comment:</label>
-                <textarea id="text" name="text"></textarea>
-            </div>
-            <input type="submit" value="Add Comment" />
+            <input type="text" name="content" placeholder="add your comment" />
+            <button type="submit">submit</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form>
+    </security:authorize>
 
-    </sec:authorize>
+    <c:if test="${not empty entry.comments}">
+        <h4>comment:</h4>
+        <ul>
+            <c:forEach items="${entry.comments}" var="comment">
+                <li>${comment.user}: ${comment.content}</li>
+            </c:forEach>
+        </ul>
+    </c:if>
 
-    <sec:authorize access="!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER')">
-
-        <p>You must be logged in as a registered user or administrator to add a comment.</p>
-
-    </sec:authorize>
 </div>
 <a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>

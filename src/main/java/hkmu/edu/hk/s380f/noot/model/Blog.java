@@ -31,9 +31,10 @@ public class Blog {
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
-    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
 
 
 
@@ -107,6 +108,7 @@ public class Blog {
         this.updateTime = updateTime;
     }
 
+
     public List<Comment> getComments() {
         return comments;
     }
@@ -116,12 +118,12 @@ public class Blog {
     }
 
     public void addComment(Comment comment) {
+        comments.add(comment);
         comment.setBlog(this);
-        this.comments.add(comment);
     }
 
-    public void deleteComment(Comment comment) {
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
         comment.setBlog(null);
-        this.comments.remove(comment);
     }
 }
