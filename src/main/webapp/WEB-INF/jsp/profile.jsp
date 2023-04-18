@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog</title>
+    <title>User Profile</title>
     <style>
 		* {
 			padding: 10px;
@@ -21,6 +21,14 @@
 			font-size: 30px;
 		}
 
+		.nav_content {
+			height: 80%;
+		}
+
+		#logout {
+			position: relative;
+			margin-top: 100%;
+		}
 
 		.nav_content a {
 			display: block;
@@ -36,19 +44,15 @@
 			color: white;
 		}
 
-		.nav_content {
-			height: 80%;
-		}
-
-		#logout {
-			position: relative;
-			margin-top: 100%;
-		}
-
 		.title {
 			text-decoration: none;
 			color: #000;
 			display: block;
+		}
+		.return {
+			text-decoration: none;
+			float: right;
+			font-size: 22px;
 		}
 
 		.content {
@@ -57,15 +61,7 @@
 			padding: 20px;
 			font-size: 25px;
 		}
-
-		.return {
-			text-decoration: none;
-			float: right;
-			font-size: 22px;
-		}
-
     </style>
-    <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
 <body>
 
@@ -92,22 +88,41 @@
         </security:authorize>
     </div>
 </div>
-<div class="content">
-    <h2>Edit Blog #${blog.id}</h2>
-    <form:form method="POST" enctype="multipart/form-data" modelAttribute="blogForm">
-        <form:label path="subject">Subject</form:label><br/>
-        <form:input type="text" path="subject"/><br/><br/>
-        <form:label path="body">Body</form:label><br/>
-        <form:textarea path="body" rows="5" cols="30"/><br/><br/>
-        <b>Add more attachments</b><br/>
-        <input type="file" name="attachments" multiple="multiple"/><br/><br/>
-        <input type="submit" value="Save"/><br/><br/>
-    </form:form>
 
+<div class="content">
+    <h2>My Profile</h2>
+    <h3>My Blogs</h3>
+    <c:choose>
+        <c:when test="${fn:length(userBlogs) == 0}">
+            <i>You haven't created any blogs yet.</i>
+        </c:when>
+        <c:otherwise>
+            <c:forEach items="${userBlogs}" var="entry">
+                Blog ${entry.id}:
+                <a href="<c:url value="/blog/view/${entry.id}" />">
+                    <c:out value="${entry.subject}"/></a>
+                (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
+                <c:if test="${not empty entry.attachments}">
+                    <div style="display: inline-block; padding: 5px;">
+                        <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
+                            <c:if test="${status.index < 1}">
+                                <img src="<c:url value='/blog/${entry.id}/image/${attachment.id}'/>"
+                                     alt="${attachment.name}"
+                                     style="max-width: 300px; max-height: 300px;"/>
+                            </c:if>
+                        </c:forEach>
+                    </div><br/>
+                </c:if>
+                [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
+                [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
+                <br/><br/><br/>
+            </c:forEach>
+        </c:otherwise>
+    </c:choose>
 </div>
 <a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
-</body>
 
+</body>
 <script>
     document.getElementById('logout').addEventListener('click', function (event) {
         event.preventDefault();
