@@ -8,6 +8,9 @@ import hkmu.edu.hk.s380f.noot.model.Blog;
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import hkmu.edu.hk.s380f.noot.model.Comment;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +29,9 @@ public class BlogService {
 
     @Resource
     private AttachmentRepository aRepo;
+
+    @Autowired
+    private BlogUserRepository blogUserRepository;
 
     @Transactional
     public List<Blog> getBlogs() {
@@ -140,19 +146,25 @@ public class BlogService {
     }
 
     @Transactional
-    public void saveComment(long blogId, String username, String content) {
+    public void saveComment(long blogId, String content) {
         Blog blog = bRepo.findById(blogId).orElse(null);
         if (blog == null) {
             throw new RuntimeException("Blog " + blogId + " not found.");
         }
 
-        BlogUser user = buRepo.findById(username).orElse(null);
-        if (user == null) {
-            throw new RuntimeException("User " + username + " not found.");
+        // 从安全上下文获取当前登录的用户
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+
+        // 使用用户名查找 BlogUser 实例
+        BlogUser currentUser = blogUserRepository.findByUsername(currentUserName);
+
+        if (currentUser == null) {
+            throw new RuntimeException("User " + currentUserName + " not found.");
         }
 
         Comment comment = new Comment();
-        comment.setUser(user);
+        comment.setUser(currentUser);
         comment.setBlog(blog);
         comment.setContent(content);
 

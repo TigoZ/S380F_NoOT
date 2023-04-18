@@ -187,9 +187,8 @@
         <h4>comment:</h4>
         <ul>
             <c:forEach items="${blog.comments}" var="comment">
-                <li>
-                    Comment at: ${comment.createdAt}<br/>${comment.user.username}: ${comment.content}
-                </li>
+                <li>${comment.user.username}: ${comment.content}</li>
+                <span class="time-difference" data-time="${comment.createdAt}"></span>
             </c:forEach>
         </ul>
     </c:if>
@@ -237,6 +236,38 @@
 
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
+
+        function timeDifference(current, previous) {
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+        var msPerYear = msPerDay * 365;
+
+        var elapsed = current - previous;
+
+        if (elapsed < msPerMinute) {
+        return Math.round(elapsed / 1000) + ' seconds ago';
+    } else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + ' minutes ago';
+    } else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + ' hours ago';
+    } else if (elapsed < msPerMonth) {
+        return Math.round(elapsed / msPerDay) + ' days ago';
+    } else if (elapsed < msPerYear) {
+        return Math.round(elapsed / msPerMonth) + ' months ago';
+    } else {
+        return Math.round(elapsed / msPerYear) + ' years ago';
+    }
+    }
+
+        var timeDifferenceElements = document.getElementsByClassName('time-difference');
+        var currentTime = new Date().getTime();
+
+        for (var i = 0; i < timeDifferenceElements.length; i++) {
+        var commentTime = new Date(timeDifferenceElements[i].getAttribute('data-time')).getTime();
+        timeDifferenceElements[i].innerText = timeDifference(currentTime, commentTime);
+    }
 
 </script>
 
