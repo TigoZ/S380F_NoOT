@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     @GetMapping("/")
     public String index() {
-        return "redirect:/ticket/list";
+        return "redirect:/blog/list";
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
     }
+
 }
 
