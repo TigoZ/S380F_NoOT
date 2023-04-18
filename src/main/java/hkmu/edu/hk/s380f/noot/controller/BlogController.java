@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -190,6 +191,15 @@ public class BlogController {
     public String saveComment(@PathVariable long blogId, @RequestParam String username, @RequestParam String content) {
         bService.saveComment(blogId, content);
         return "redirect:/blog/view/" + blogId;
+    }
+
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Principal principal) {
+        String username = principal.getName();
+        List<Blog> userBlogs = bService.getBlogsByUsername(username);
+        model.addAttribute("userBlogs", userBlogs);
+        return "profile";
     }
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})
