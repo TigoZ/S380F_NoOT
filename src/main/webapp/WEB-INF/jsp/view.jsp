@@ -187,7 +187,7 @@
         <h4>comment:</h4>
         <ul>
             <c:forEach items="${blog.comments}" var="comment">
-                <li>${comment.user}: ${comment.content}</li>
+                <li>${comment.user.username}: ${comment.content}</li>
             </c:forEach>
         </ul>
     </c:if>
