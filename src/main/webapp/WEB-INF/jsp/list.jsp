@@ -94,13 +94,7 @@
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
                 (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
-                <security:authorize access="hasRole('ADMIN') or
-                                principal=='${entry.customerName}'">
-                    [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
-                </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
-                    [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
-                </security:authorize>
+
                 <c:if test="${not empty entry.attachments}">
                     <div style="display: inline-block; padding: 5px;">
                         <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
@@ -111,6 +105,26 @@
                             </c:if>
                         </c:forEach>
                     </div>
+                </c:if>
+                <br/>
+
+                <security:authorize access="hasAnyRole('USER', 'ADMIN')">
+                    <form action="<c:url value='/blog/comment/${entry.id}'/>" method="post">
+
+                    <input type="text" name="content" placeholder="add your comment" />
+                        <button type="submit">submit</button>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+                </security:authorize>
+
+
+                <c:if test="${not empty entry.comments}">
+                    <h4>comment:</h4>
+                    <ul>
+                        <c:forEach items="${entry.comments}" var="comment">
+                            <li>${comment.user}: ${comment.content}</li>
+                        </c:forEach>
+                    </ul>
                 </c:if>
                 <br/>
             </c:forEach>

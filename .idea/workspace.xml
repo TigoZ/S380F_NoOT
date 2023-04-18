@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="ui">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/CommentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/BlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/BlogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/Blog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/Blog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sql/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sql/schema.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/view.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -39,9 +49,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Jsp File" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -115,7 +125,7 @@
     "project.structure.last.edited": "Facets",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3820483",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.控制台颜色",
+    "settings.editor.selected.configurable": "editor.preferences.import",
     "spring.configuration.checksum": "f225cb79a55d0e20bd211dfeafe9c604",
     "vue.rearranger.settings.migration": "true"
   }

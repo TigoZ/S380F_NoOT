@@ -32,6 +32,10 @@ public class Blog {
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+
 
 
     // getters and setters of all properties
@@ -102,5 +106,24 @@ public class Blog {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setBlog(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setBlog(null);
     }
 }

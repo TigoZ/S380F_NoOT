@@ -6,6 +6,7 @@ import hkmu.edu.hk.s380f.noot.exception.BlogNotFound;
 import hkmu.edu.hk.s380f.noot.model.Attachment;
 import hkmu.edu.hk.s380f.noot.model.Blog;
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
+import hkmu.edu.hk.s380f.noot.model.Comment;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,6 +138,28 @@ public class BlogService {
         }
         bRepo.save(updatedBlog);
     }
+
+    @Transactional
+    public void saveComment(long blogId, String username, String content) {
+        Blog blog = bRepo.findById(blogId).orElse(null);
+        if (blog == null) {
+            throw new RuntimeException("Blog " + blogId + " not found.");
+        }
+
+        BlogUser user = buRepo.findById(username).orElse(null);
+        if (user == null) {
+            throw new RuntimeException("User " + username + " not found.");
+        }
+
+        Comment comment = new Comment();
+        comment.setUser(user);
+        comment.setBlog(blog);
+        comment.setContent(content);
+
+        blog.addComment(comment);
+        bRepo.save(blog);
+    }
+
 
 }
 
