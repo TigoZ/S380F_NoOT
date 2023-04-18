@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog</title>
+    <title>User Profile</title>
     <style>
 		* {
 			padding: 10px;
@@ -49,6 +49,11 @@
 			color: #000;
 			display: block;
 		}
+		.return {
+			text-decoration: none;
+			float: right;
+			font-size: 22px;
+		}
 
 		.content {
 			margin: 0 400px;
@@ -57,7 +62,6 @@
 			font-size: 25px;
 		}
     </style>
-    <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
 <body>
 
@@ -84,18 +88,20 @@
         </security:authorize>
     </div>
 </div>
+
 <div class="content">
+    <h2>My Profile</h2>
+    <h3>My Blogs</h3>
     <c:choose>
-        <c:when test="${fn:length(blogDatabase) == 0}">
-            <i>There are no blogs in the system.</i>
+        <c:when test="${fn:length(userBlogs) == 0}">
+            <i>You haven't created any blogs yet.</i>
         </c:when>
         <c:otherwise>
-            <c:forEach items="${blogDatabase}" var="entry">
+            <c:forEach items="${userBlogs}" var="entry">
                 Blog ${entry.id}:
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/></a>
                 (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
-
                 <c:if test="${not empty entry.attachments}">
                     <div style="display: inline-block; padding: 5px;">
                         <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
@@ -107,18 +113,16 @@
                         </c:forEach>
                     </div><br/>
                 </c:if>
-                <security:authorize access="hasRole('ADMIN') or
-                                principal=='${entry.customerName}'">
-                    [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
-                </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
-                    [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
-                </security:authorize>
+                [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
+                [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
                 <br/><br/><br/>
             </c:forEach>
         </c:otherwise>
     </c:choose>
 </div>
+<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
+
+</body>
 <script>
     document.getElementById('logout').addEventListener('click', function (event) {
         event.preventDefault();
@@ -147,16 +151,5 @@
 
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
-
-    function openModal(id) {
-        var modal = document.getElementById('modal-' + id);
-        modal.style.display = "block";
-    }
-
-    function closeModal(id) {
-        var modal = document.getElementById('modal-' + id);
-        modal.style.display = "none";
-    }
 </script>
-</body>
 </html>

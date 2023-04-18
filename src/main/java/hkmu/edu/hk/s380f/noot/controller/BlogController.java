@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -172,6 +173,15 @@ public class BlogController {
                 form.getBody(), form.getAttachments());
         return "redirect:/blog/view/" + blogId;
     }
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Principal principal) {
+        String username = principal.getName();
+        List<Blog> userBlogs = bService.getBlogsByUsername(username);
+        model.addAttribute("userBlogs", userBlogs);
+        return "profile";
+    }
+
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})
     public ModelAndView error(Exception e) {
