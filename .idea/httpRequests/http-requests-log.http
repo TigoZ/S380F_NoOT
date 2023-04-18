@@ -1,0 +1,10 @@
+POST http://127.0.0.1:8080/No_OT/user/register
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-04-08T123018.403.json
+
+###
+
