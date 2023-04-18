@@ -188,7 +188,7 @@ public class BlogController {
 
     @PostMapping("/comment/{blogId}")
     public String saveComment(@PathVariable long blogId, @RequestParam String username, @RequestParam String content) {
-        bService.saveComment(blogId, username, content);
+        bService.saveComment(blogId, content);
         return "redirect:/blog/view/" + blogId;
     }
 
