@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -152,11 +153,9 @@ public class BlogService {
             throw new RuntimeException("Blog " + blogId + " not found.");
         }
 
-        // 从安全上下文获取当前登录的用户
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
 
-        // 使用用户名查找 BlogUser 实例
         BlogUser currentUser = blogUserRepository.findByUsername(currentUserName);
 
         if (currentUser == null) {
@@ -172,6 +171,16 @@ public class BlogService {
         bRepo.save(blog);
     }
 
+
+    @Transactional
+    public List<Blog> getBlogsByUsername(String username) {
+        BlogUser user = buRepo.findById(username).orElse(null);
+        if (user != null) {
+            return user.getBlogs();
+        } else {
+            return new ArrayList<>();
+        }
+    }
 
 }
 

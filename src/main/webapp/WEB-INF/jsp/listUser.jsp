@@ -50,7 +50,7 @@
 
 		#logout {
 			position: relative;
-			margin-top: 140%;
+			margin-top: 100%;
 		}
 
 		.content {
@@ -81,6 +81,8 @@
         </security:authorize>
         <security:authorize access="hasAnyRole('USER', 'ADMIN')">
             <a href="<c:url value='/blog/create' />">Create a Blog</a>
+            <a href="<c:url value='/blog/profile' />">My Profile</a>
+
             <c:url var="logoutUrl" value="/logout"/>
             <a href="/logout" id="logout">Log out</a>
             <input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
