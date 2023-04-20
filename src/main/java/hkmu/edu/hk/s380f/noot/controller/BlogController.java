@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -55,6 +57,11 @@ public class BlogController {
     @GetMapping(value = {"", "/list"})
     public String list(ModelMap model, Principal principal) {
         List<Blog> blogs = bService.getBlogs();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName();
+        model.addAttribute("currentUsername", currentUsername);
+
         if (principal != null) {
             String loggedInUsername = principal.getName();
             Map<Long, Boolean> canEditOrDelete = new HashMap<>();
@@ -67,6 +74,7 @@ public class BlogController {
         model.addAttribute("blogDatabase", blogs);
         return "list";
     }
+
 
     @GetMapping("/create")
     public ModelAndView create() {
@@ -107,6 +115,8 @@ public class BlogController {
         }
     }
 
+
+
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping("/create")
     public View create(Form form, Principal principal) throws IOException {
@@ -120,14 +130,19 @@ public class BlogController {
 
 
     @GetMapping("/view/{blogId}")
-    public String view(@PathVariable("blogId") long blogId,
-                       ModelMap model)
+    public String view(@PathVariable("blogId") long blogId, ModelMap model)
             throws BlogNotFound {
         Blog blog = bService.getBlog(blogId);
         model.addAttribute("blogId", blogId);
         model.addAttribute("blog", blog);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName();
+        model.addAttribute("currentUsername", currentUsername);
+
         return "view";
     }
+
 
     @GetMapping("/{blogId}/image/{attachment:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
@@ -204,25 +219,16 @@ public class BlogController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @GetMapping("/profile")
-    public String showProfile(Model model, Principal principal) {
+    @GetMapping({"/profile", "/profile/{username}"})
+    public String showProfile(Model model, Principal principal, @PathVariable(required = false) String username) {
         if (principal == null) {
             return "redirect:/login";
         }
-        String username = principal.getName();
-        List<Blog> userBlogs = bService.getBlogsByUsername(username);
-        model.addAttribute("userBlogs", userBlogs);
 
-        BlogUser blogUser = blogUserService.findByUsername(username);
-        model.addAttribute("user", blogUser);
-        model.addAttribute("description", blogUser.getDescription());
-        return "profile";
-    }
+        if (username == null) {
+            username = principal.getName();
+        }
 
-
-    @GetMapping("/profile/{username}")
-    public String showUserProfile(@PathVariable String username, Model model) {
         List<Blog> userBlogs = bService.getBlogsByUsername(username);
         model.addAttribute("userBlogs", userBlogs);
 
@@ -230,8 +236,13 @@ public class BlogController {
         model.addAttribute("user", blogUser);
         model.addAttribute("description", blogUser.getDescription());
 
-        return "userProfile";
+        if (username.equals(principal.getName())) {
+            return "profile";
+        } else {
+            return "userProfile";
+        }
     }
+
 
 
 

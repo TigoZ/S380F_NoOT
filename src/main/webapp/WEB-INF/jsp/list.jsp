@@ -133,9 +133,16 @@
                 <a href="<c:url value="/blog/view/${entry.id}" />">
                     <c:out value="${entry.subject}"/>
                 </a>
-                (BlogUser: <a href="<c:url value="/blog/profile/${entry.customerName}" />">
-                <c:out value="${entry.customerName}"/>
-            </a>)<br/>
+                (BlogUser:
+                <c:choose>
+                    <c:when test="${user.username eq currentUsername}">
+                        <a href="<c:url value='/blog/profile' />"><c:out value="${entry.customerName}"/></a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/blog/profile/${entry.customerName}' />"><c:out value="${entry.customerName}"/></a>
+                    </c:otherwise>
+                </c:choose>
+                </a>)<br/>
 
 
                 <c:if test="${not empty entry.attachments}">

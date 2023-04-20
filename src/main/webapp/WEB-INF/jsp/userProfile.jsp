@@ -170,9 +170,10 @@
                 Photo Blog updated: <fmt:formatDate value="${entry.updateTime}"
                                                     pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
 
-                [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
-                [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
-
+                <security:authorize access="hasRole('ADMIN')">
+                    [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
+                    [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
+                </security:authorize>
                 <br/><br/><br/>
 
             </c:forEach>
