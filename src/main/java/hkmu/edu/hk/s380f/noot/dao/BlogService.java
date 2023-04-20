@@ -34,6 +34,8 @@ public class BlogService {
     @Autowired
     private BlogUserRepository blogUserRepository;
 
+
+
     @Transactional
     public List<Blog> getBlogs() {
         List<Blog> blogs = bRepo.findAll();
@@ -175,6 +177,8 @@ public class BlogService {
         blog.addComment(comment);
         bRepo.save(blog);
     }
+
+
 
 
     @Transactional

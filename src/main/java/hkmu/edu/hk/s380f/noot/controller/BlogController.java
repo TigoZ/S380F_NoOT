@@ -4,11 +4,13 @@ package hkmu.edu.hk.s380f.noot.controller;
 import hkmu.edu.hk.s380f.noot.dao.BlogService;
 import hkmu.edu.hk.s380f.noot.dao.BlogUserService;
 import hkmu.edu.hk.s380f.noot.dao.CommentRepository;
+import hkmu.edu.hk.s380f.noot.dao.CommentService;
 import hkmu.edu.hk.s380f.noot.exception.AttachmentNotFound;
 import hkmu.edu.hk.s380f.noot.exception.BlogNotFound;
 import hkmu.edu.hk.s380f.noot.model.Attachment;
 import hkmu.edu.hk.s380f.noot.model.Blog;
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
+import hkmu.edu.hk.s380f.noot.model.Comment;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
@@ -50,6 +53,10 @@ public class BlogController {
 
     @Autowired
     private BlogUserService blogUserService;
+
+    @Autowired
+    private CommentService commentService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(BlogController.class);
 
@@ -215,6 +222,17 @@ public class BlogController {
     @PostMapping("/comment/{blogId}")
     public String saveComment(@PathVariable long blogId, @RequestParam String username, @RequestParam String content) {
         bService.saveComment(blogId, content);
+        return "redirect:/blog/view/" + blogId;
+    }
+
+
+    @PostMapping("/comment/delete/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteComment(@PathVariable("commentId") Long commentId, RedirectAttributes redirectAttributes) {
+        Comment comment = commentService.findById(commentId);
+        Long blogId = comment.getBlog().getId();
+        commentService.deleteComment(commentId);
+        redirectAttributes.addFlashAttribute("message", "Comment deleted successfully.");
         return "redirect:/blog/view/" + blogId;
     }
 

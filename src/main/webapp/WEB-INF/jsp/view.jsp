@@ -190,6 +190,12 @@
             <c:forEach items="${blog.comments}" var="comment">
                 <li>${comment.user.username}: ${comment.content}</li>
                 <span class="time-difference" data-time="${comment.createdAt}"></span>
+                <security:authorize access="hasRole('ADMIN')">
+                    <form action="<c:url value='/blog/comment/delete/${comment.id}'/>" method="post" style="display:inline;">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="submit" style="border:none; background:none; color:#f00; cursor:pointer;">Delete</button>
+                    </form>
+                </security:authorize>
             </c:forEach>
         </ul>
     </c:if>
