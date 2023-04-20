@@ -80,6 +80,7 @@
             max-height: 80%;
             object-fit: contain;
         }
+
         .close {
             color: white;
             font-size: 28px;
@@ -127,10 +128,15 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${blogDatabase}" var="entry">
+
                 Blog ${entry.id}:
                 <a href="<c:url value="/blog/view/${entry.id}" />">
-                    <c:out value="${entry.subject}"/></a>
-                (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
+                    <c:out value="${entry.subject}"/>
+                </a>
+                (BlogUser: <a href="<c:url value="/blog/profile/${entry.customerName}" />">
+                <c:out value="${entry.customerName}"/>
+            </a>)<br/>
+
 
                 <c:if test="${not empty entry.attachments}">
                     <div style="display: inline-block; padding: 5px;">
@@ -144,7 +150,8 @@
 
                             </c:if>
                         </c:forEach>
-                    </div><br/>
+                    </div>
+                    <br/>
                 </c:if>
 
                 <c:if test="${canEditOrDelete[entry.id]}">

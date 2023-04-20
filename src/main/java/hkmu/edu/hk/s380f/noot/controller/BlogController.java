@@ -200,8 +200,12 @@ public class BlogController {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/profile")
     public String showProfile(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
         String username = principal.getName();
         List<Blog> userBlogs = bService.getBlogsByUsername(username);
         model.addAttribute("userBlogs", userBlogs);
@@ -209,6 +213,13 @@ public class BlogController {
     }
 
 
+    @GetMapping("/profile/{username}")
+    public String showUserProfile(@PathVariable String username, Model model) {
+        List<Blog> userBlogs = bService.getBlogsByUsername(username);
+        model.addAttribute("userBlogs", userBlogs);
+
+        return "userProfile";
+    }
 
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})

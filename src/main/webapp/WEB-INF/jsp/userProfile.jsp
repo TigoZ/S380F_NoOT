@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>User Profile</title>
     <style>
         * {
@@ -50,17 +51,17 @@
             display: block;
         }
 
-        .return {
-            text-decoration: none;
-            float: right;
-            font-size: 22px;
-        }
-
         .content {
             margin: 0 400px;
             max-width: 900px;
             padding: 20px;
             font-size: 25px;
+        }
+
+        .return {
+            text-decoration: none;
+            float: right;
+            font-size: 22px;
         }
 
         .modal {
@@ -100,6 +101,7 @@
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
+
 </head>
 <body>
 
@@ -128,8 +130,14 @@
 </div>
 
 <div class="content">
-    <h2>My Profile</h2>
-    <h3>My Blogs</h3>
+    <h1>User Profile</h1>
+    <hr>
+    <h2>User Info</h2>
+    <p>Username: ${user.username}</p>
+    <p>Email: ${user.email}</p>
+    <p>Phone Number: ${user.phoneNumber}</p>
+    <hr>
+    <h2>User's Blogs</h2>
     <c:choose>
         <c:when test="${fn:length(userBlogs) == 0}">
             <i>You haven't created any blogs yet.</i>
@@ -161,8 +169,8 @@
                 Photo Blog updated: <fmt:formatDate value="${entry.updateTime}"
                                                     pattern="EEE, d MMM yyyy HH:mm:ss Z"/><br/><br/>
 
-                    [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
-                    [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
+                [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
+                [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
 
                 <br/><br/><br/>
 
@@ -172,6 +180,7 @@
 </div>
 <a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 
+</div>
 <div id="myModal" class="modal">
     <span class="close" onclick="closeModal();">&times;</span>
     <img class="modal-content" id="imgModal">
@@ -224,6 +233,5 @@
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
 </script>
-
 </body>
 </html>
