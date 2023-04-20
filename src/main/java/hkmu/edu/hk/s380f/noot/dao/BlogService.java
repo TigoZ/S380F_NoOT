@@ -31,7 +31,7 @@ public class BlogService {
     @Resource
     private AttachmentRepository aRepo;
 
-    @Autowired
+    @Resource
     private BlogUserRepository blogUserRepository;
 
     @Transactional

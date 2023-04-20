@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb9aec5c-f256-45b0-98e6-c6c0fbe3fadc" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/comment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/28a24c97-4429-4aad-9e58-1d5ec79af10d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/28a24c97-4429-4aad-9e58-1d5ec79af10d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/HistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/controller/HistoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/BlogService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/CommentHistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/dao/CommentHistoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hkmu/edu/hk/s380f/noot/model/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/add.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/comment.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/comment.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/edit.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/error.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/error.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listUser.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +142,7 @@
       <workItem from="1680438448125" duration="814000" />
       <workItem from="1680439373611" duration="91000" />
       <workItem from="1681843562055" duration="1890000" />
-      <workItem from="1681964703743" duration="1842000" />
+      <workItem from="1681964703743" duration="17936000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <created>1680437545345</created>
@@ -179,6 +186,16 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Changes" />
     <option name="LAST_COMMIT_MESSAGE" value="Changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="org.hibernate.LazyInitializationException" package="org.hibernate" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

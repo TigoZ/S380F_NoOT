@@ -38,6 +38,7 @@ public class CommentHistoryService {
 
     @Resource
     private CommentRepository cRepo;
+    @Transactional
     public List<Comment> getAllComments() {
         return cRepo.findAll();
     }

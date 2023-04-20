@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog</title>
+    <title>Photo Blog User Management</title>
+
     <style>
         * {
             padding: 10px;
@@ -21,14 +22,7 @@
             font-size: 30px;
         }
 
-        .nav_content {
-            height: 80%;
-        }
 
-        #logout {
-            position: relative;
-            margin-top: 100%;
-        }
 
         .nav_content a {
             display: block;
@@ -50,46 +44,27 @@
             display: block;
         }
 
+        .nav_content{
+            height: 80%;
+        }
+
+        #logout {
+            position: relative;
+            margin-top: 100%;
+        }
+
         .content {
             margin: 0 400px;
             max-width: 900px;
             padding: 20px;
-            font-size: 25px;
+            font-size: 22px;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: rgba(0, 0, 0, 0.8);
+        .return{
+            text-decoration: none;
+            float: right;
+            font-size: 22px;
         }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            width: 80%;
-            max-width: 700px;
-            max-height: 80%;
-            object-fit: contain;
-        }
-        .close {
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            right: 20px;
-            top: 0;
-            cursor: pointer;
-        }
-
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
@@ -122,59 +97,39 @@
 </div>
 
 <div class="content">
+
+    <h2>Comment History</h2>
+
     <c:choose>
-        <c:when test="${fn:length(commentDatabase) == 0}">
-            <i>There are no comment in the database.</i>
+        <c:when test="${fn:length(comments) == 0}">
+            <i>There are no comments in the system.</i>
         </c:when>
         <c:otherwise>
-            <c:forEach items="${blogDatabase}" var="entry">
-                Blog ${entry.id}:
-                <a href="<c:url value="/blog/view/${entry.id}" />">
-                    <c:out value="${entry.subject}"/></a>
-                (BlogUser: <c:out value="${entry.customerName}"/>)<br/>
-
-                <c:if test="${not empty entry.attachments}">
-                    <div style="display: inline-block; padding: 5px;">
-                        <c:forEach items="${entry.attachments}" var="attachment" varStatus="status">
-                            <c:if test="${status.index < 1}">
-                                <img src="<c:url value='/blog/${entry.id}/image/${attachment.id}'/>"
-                                     alt="${attachment.name}"
-                                     style="max-width: 300px; max-height: 300px;"
-                                     data-id="${attachment.id}"
-                                     onclick="event.stopPropagation(); openModal(event);"/>
-
-                            </c:if>
-                        </c:forEach>
-                    </div><br/>
-                </c:if>
-
-            </c:forEach>
+            <table>
+                <tr>
+                    <th>Comment ID</th>
+                    <th>Blog ID</th>
+                    <th>Username</th>
+                    <th>Content</th>
+                    <th>Create Time</th>
+                    <th>Update Time</th>
+                </tr>
+                <c:forEach items="${comments}" var="comment">
+                    <tr>
+                        <td>${comment.id}</td>
+                        <td>${comment.blog.id}</td>
+                        <td>${comment.user.username}</td>
+                        <td>${comment.content}</td>
+                        <td>${comment.createdAt}</td>
+                        <td>${comment.updatedAt}</td>
+                    </tr>
+                </c:forEach>
+            </table>
         </c:otherwise>
     </c:choose>
 </div>
-
-<div id="myModal" class="modal">
-    <span class="close" onclick="closeModal();">&times;</span>
-    <img class="modal-content" id="imgModal">
-</div>
-
-<script>
-    var modal = document.getElementById('myModal');
-    var modalImg = document.getElementById('imgModal');
-
-    function openModal(event) {
-        var img = event.target;
-        var attachmentId = img.getAttribute('data-id');
-        var entryId = img.src.split('/')[5];
-
-        modal.style.display = 'block';
-        modalImg.src = '/No_OT/blog/' + entryId + '/image/' + attachmentId;
-    }
-
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-</script>
+<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
+</body>
 
 <script>
     document.getElementById('logout').addEventListener('click', function (event) {
@@ -205,5 +160,4 @@
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
 </script>
-</body>
 </html>
