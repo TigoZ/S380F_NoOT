@@ -110,6 +110,7 @@
         <security:authorize access="hasRole('ADMIN')">
             <br/>
             <a href="<c:url value='/user' />">Manage User Accounts</a>
+            <a href="<c:url value='/comment-history' />">Comment History</a>
         </security:authorize>
         <security:authorize access="hasAnyRole('USER', 'ADMIN')">
             <a href="<c:url value='/blog/create' />">Create a Blog</a>

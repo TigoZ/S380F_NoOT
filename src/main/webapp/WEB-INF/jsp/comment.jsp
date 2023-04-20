@@ -1,68 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog</title>
+    <title>Photo Blog User Management</title>
+
     <style>
-		* {
-			padding: 10px;
-			margin: 0;
-		}
+        * {
+            padding: 10px;
+            margin: 0;
+        }
 
-		.nav {
-			height: 100%;
-			width: 300px;
-			position: fixed;
-			top: 0;
-			left: 0;
-			overflow-x: hidden;
-			padding-top: 20px;
-			border-right: 1px solid rgba(222, 211, 211, 0.55);
-			float: left;
-			font-size: 30px;
-		}
+        .nav {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            border-right: 1px solid rgba(222, 211, 211, 0.55);
+            float: left;
+            font-size: 30px;
+        }
 
 
-		.nav_content a {
-			display: block;
-			color: #000;
-			padding: 16px;
-			text-decoration: none;
-			font-size: 22px;
-			border-radius: 4px;
-		}
 
-		.nav_content a:hover {
-			background-color: #979494c1;
-			color: white;
-		}
+        .nav_content a {
+            display: block;
+            color: #000;
+            padding: 16px;
+            text-decoration: none;
+            font-size: 22px;
+            border-radius: 4px;
+        }
 
-		.nav_content {
-			height: 80%;
-		}
+        .nav_content a:hover {
+            background-color: #979494c1;
+            color: white;
+        }
 
-		#logout {
-			position: relative;
-			margin-top: 100%;
-		}
+        .title {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
 
-		.title {
-			text-decoration: none;
-			color: #000;
-			display: block;
-		}
+        .nav_content{
+            height: 80%;
+        }
 
-		.content {
-			margin: 0 400px;
-			max-width: 900px;
-			padding: 20px;
-			font-size: 25px;
-		}
+        #logout {
+            position: relative;
+            margin-top: 100%;
+        }
 
-		.return {
-			text-decoration: none;
-			float: right;
-			font-size: 22px;
-		}
+        .content {
+            margin: 0 400px;
+            max-width: 900px;
+            padding: 20px;
+            font-size: 22px;
+        }
+
+        .return{
+            text-decoration: none;
+            float: right;
+            font-size: 22px;
+        }
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
@@ -95,17 +97,36 @@
 </div>
 
 <div class="content">
-    <h2>Edit Blog #${blog.id}</h2>
-    <form:form method="POST" enctype="multipart/form-data" modelAttribute="blogForm">
-        <form:label path="subject">Subject</form:label><br/>
-        <form:input type="text" path="subject"/><br/><br/>
-        <form:label path="body">Body</form:label><br/>
-        <form:textarea path="body" rows="5" cols="30"/><br/><br/>
-        <b>Add more attachments</b><br/>
-        <input type="file" name="attachments" multiple="multiple"/><br/><br/>
-        <input type="submit" value="Save"/><br/><br/>
-    </form:form>
 
+    <h2>Comment History</h2>
+
+    <c:choose>
+        <c:when test="${fn:length(comments) == 0}">
+            <i>There are no comments in the system.</i>
+        </c:when>
+        <c:otherwise>
+            <table>
+                <tr>
+                    <th>Comment ID</th>
+                    <th>Blog ID</th>
+                    <th>Username</th>
+                    <th>Content</th>
+                    <th>Create Time</th>
+                    <th>Update Time</th>
+                </tr>
+                <c:forEach items="${comments}" var="comment">
+                    <tr>
+                        <td>${comment.id}</td>
+                        <td>${comment.blog.id}</td>
+                        <td>${comment.user.username}</td>
+                        <td>${comment.content}</td>
+                        <td>${comment.createdAt}</td>
+                        <td>${comment.updatedAt}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </div>
 <a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
