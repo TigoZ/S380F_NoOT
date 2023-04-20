@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user/**").hasRole("ADMIN")
-                        .requestMatchers("/history/**").hasRole("ADMIN")
+                        .requestMatchers("/comment-history/**").hasRole("ADMIN")
                         .requestMatchers("/blog/**").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/forgot_password").permitAll()
