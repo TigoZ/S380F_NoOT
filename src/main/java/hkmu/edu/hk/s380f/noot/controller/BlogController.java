@@ -8,6 +8,7 @@ import hkmu.edu.hk.s380f.noot.exception.AttachmentNotFound;
 import hkmu.edu.hk.s380f.noot.exception.BlogNotFound;
 import hkmu.edu.hk.s380f.noot.model.Attachment;
 import hkmu.edu.hk.s380f.noot.model.Blog;
+import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -76,6 +77,9 @@ public class BlogController {
         private String subject;
         private String body;
         private List<MultipartFile> attachments;
+
+
+
 
         // Getters and Setters of customerName, subject, body, attachments
         public String getSubject() {
@@ -209,6 +213,10 @@ public class BlogController {
         String username = principal.getName();
         List<Blog> userBlogs = bService.getBlogsByUsername(username);
         model.addAttribute("userBlogs", userBlogs);
+
+        BlogUser blogUser = blogUserService.findByUsername(username);
+        model.addAttribute("user", blogUser);
+        model.addAttribute("description", blogUser.getDescription());
         return "profile";
     }
 
@@ -218,8 +226,13 @@ public class BlogController {
         List<Blog> userBlogs = bService.getBlogsByUsername(username);
         model.addAttribute("userBlogs", userBlogs);
 
+        BlogUser blogUser = blogUserService.findByUsername(username);
+        model.addAttribute("user", blogUser);
+        model.addAttribute("description", blogUser.getDescription());
+
         return "userProfile";
     }
+
 
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})

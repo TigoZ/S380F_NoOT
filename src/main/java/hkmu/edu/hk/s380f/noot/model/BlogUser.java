@@ -16,6 +16,7 @@ public class BlogUser {
     private String email;
     @Column(name = "phone_number")
     private String phoneNumber;
+    private String description;
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
@@ -27,11 +28,12 @@ public class BlogUser {
     private List<Blog> blogs = new ArrayList<>();
 
 
-    public BlogUser(String username, String password, String[] roles, String email, String phoneNumber) {
+    public BlogUser(String username, String password, String[] roles, String email, String phoneNumber, String description) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.description = description;
         for (String role : roles) {
             this.roles.add(new UserRole(this, role));
         }
@@ -89,4 +91,11 @@ public class BlogUser {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

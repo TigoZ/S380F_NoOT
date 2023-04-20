@@ -128,7 +128,16 @@
 </div>
 
 <div class="content">
-    <h2>My Profile</h2>
+    <h2>User Profile</h2>
+
+    <hr>
+    <h2>My Info</h2>
+    <p>Username: ${user.username}</p>
+    <p>Email: ${user.email}</p>
+    <p>Phone Number: ${user.phoneNumber}</p>
+    <p>Description: ${description}</p>
+    <hr>
+
     <h3>My Blogs</h3>
     <c:choose>
         <c:when test="${fn:length(userBlogs) == 0}">

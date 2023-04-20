@@ -136,6 +136,7 @@
     <p>Username: ${user.username}</p>
     <p>Email: ${user.email}</p>
     <p>Phone Number: ${user.phoneNumber}</p>
+    <p>Description: ${description}</p>
     <hr>
     <h2>User's Blogs</h2>
     <c:choose>
