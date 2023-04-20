@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog User Management</title>
-
+    <title>Photo Blog</title>
     <style>
 		* {
 			padding: 10px;
@@ -38,12 +37,6 @@
 			color: white;
 		}
 
-		.title {
-			text-decoration: none;
-			color: #000;
-			display: block;
-		}
-
 		.nav_content{
 			height: 80%;
 		}
@@ -53,18 +46,18 @@
 			margin-top: 100%;
 		}
 
+		.title {
+			text-decoration: none;
+			color: #000;
+			display: block;
+		}
+
 		.content {
 			margin: 0 400px;
 			max-width: 900px;
 			padding: 20px;
-			font-size: 18px;
+			font-size: 25px;
 		}
-
-        .return{
-			text-decoration: none;
-			float: right;
-			font-size: 22px;
-        }
 
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
@@ -96,48 +89,20 @@
 </div>
 
 <div class="content">
-
-    <h2>Users</h2><br/>
-    <a href="<c:url value='/user/addAdmin' />">Create a new Admin</a>
-    <c:choose>
-        <c:when test="${fn:length(blogUsers) == 0}">
-            <i>There are no users in the system.</i>
-        </c:when>
-        <c:otherwise>
-            <table>
-                <tr>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Roles</th>
-                    <th>Email</th>
-                    <th>Phone_Number</th>
-                    <th>Action</th>
-                </tr>
-                <c:forEach items="${blogUsers}" var="user">
-                    <tr>
-                        <td>${user.username}</td>
-                        <td>${fn:substringAfter(user.password, '{noop}')}</td>
-                        <td>
-                            <c:forEach items="${user.roles}" var="role" varStatus="status">
-                                <c:if test="${!status.first}">, </c:if>
-                                ${role.role}
-                            </c:forEach>
-                        </td>
-                        <td>${user.email}</td>
-                        <td>${user.phoneNumber}</td>
-                        <td>
-                            [<a href="<c:url value="/user/edit/${user.username}" />" class="action">Edit</a>]
-                        </td>
-                        <td>
-                            [<a href="<c:url value="/user/delete/${user.username}" />" class="action">Delete</a>]
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:otherwise>
-    </c:choose>
+    <h2>Create an Admin</h2>
+    <form:form method="POST" modelAttribute="blogUser">
+        <form:label path="username">Username</form:label><br/>
+        <form:input type="text" path="username"/><br/><br/>
+        <form:label path="password">Password</form:label><br/>
+        <form:input type="text" path="password"/><br/><br/>
+        <form:label path="email" class="text">Email</form:label><br/>
+        <form:input type="text" class="text_input" path="email"/><br/><br/>
+        <form:label path="phoneNumber" class="text">PhoneNumber</form:label><br/>
+        <form:input type="text" class="text_input" path="phoneNumber"/><br/><br/>
+        <br/><br/>
+        <input type="submit" value="Add Admin"/>
+    </form:form>
 </div>
-<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
 
 <script>

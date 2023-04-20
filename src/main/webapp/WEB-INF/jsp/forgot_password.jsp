@@ -135,17 +135,17 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken // 添加 CSRF 令牌
+                'X-CSRF-TOKEN': csrfToken
             },
             body: JSON.stringify({ username, newPassword })
         })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('密码已成功更改！');
+                    alert('Successfully change the password！');
                     window.location.href = '/No_OT/login';
                 } else {
-                    alert('未找到此用户名，请重试。');
+                    alert('Can not find the username, please try again');
                 }
             })
             .catch(error => {

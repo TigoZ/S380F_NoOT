@@ -1,6 +1,5 @@
 package hkmu.edu.hk.s380f.noot.dao;
 
-
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
 import hkmu.edu.hk.s380f.noot.model.UserRole;
 import jakarta.annotation.Resource;
@@ -33,6 +32,18 @@ public class BlogUserService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return new User(blogUser.getUsername(), blogUser.getPassword(), authorities);
+    }
+
+    public boolean isAdmin(String username) {
+        BlogUser blogUser = findByUsername(username);
+        if (blogUser != null) {
+            for (UserRole role : blogUser.getRoles()) {
+                if ("ROLE_ADMIN".equals(role.getRole())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Transactional(readOnly = true)

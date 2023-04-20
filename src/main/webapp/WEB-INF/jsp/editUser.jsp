@@ -1,69 +1,76 @@
+<c:if test="${not empty error}">
+    <div style="color: red;">${error}</div>
+</c:if>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Photo Blog</title>
+    <title>Edit Account</title>
     <style>
-		* {
-			padding: 10px;
-			margin: 0;
-		}
+        * {
+            padding: 10px;
+            margin: 0;
+        }
 
-		.nav {
-			height: 100%;
-			width: 300px;
-			position: fixed;
-			top: 0;
-			left: 0;
-			overflow-x: hidden;
-			padding-top: 20px;
-			border-right: 1px solid rgba(222, 211, 211, 0.55);
-			float: left;
-			font-size: 30px;
-		}
+        .nav {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            border-right: 1px solid rgba(222, 211, 211, 0.55);
+            float: left;
+            font-size: 30px;
+        }
 
 
+        .nav_content a {
+            display: block;
+            color: #000;
+            padding: 16px;
+            text-decoration: none;
+            font-size: 22px;
+            border-radius: 4px;
+        }
 
-		.nav_content a {
-			display: block;
-			color: #000;
-			padding: 16px;
-			text-decoration: none;
-			font-size: 22px;
-			border-radius: 4px;
-		}
+        .nav_content a:hover {
+            background-color: #979494c1;
+            color: white;
+        }
 
-		.nav_content a:hover {
-			background-color: #979494c1;
-			color: white;
-		}
+        .title {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
 
-		.nav_content{
-			height: 80%;
-		}
+        .nav_content {
+            height: 80%;
+        }
 
-		#logout {
-			position: relative;
-			margin-top: 100%;
-		}
+        #logout {
+            position: relative;
+            margin-top: 100%;
+        }
 
-		.title {
-			text-decoration: none;
-			color: #000;
-			display: block;
-		}
+        .content {
+            margin: 0 400px;
+            max-width: 900px;
+            padding: 20px;
+            font-size: 18px;
+        }
 
-		.content {
-			margin: 0 400px;
-			max-width: 900px;
-			padding: 20px;
-			font-size: 25px;
-		}
-
+        .return {
+            text-decoration: none;
+            float: right;
+            font-size: 22px;
+        }
     </style>
-    <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
 <body>
-
 <div class="nav">
     <h2 style="font-family: 'Modern Antiqua', cursive;"><a href="/No_OT/blog" class="title">Photo
         Blog</a></h2>
@@ -89,19 +96,32 @@
 </div>
 
 <div class="content">
-    <h2>Create a User</h2>
-    <form:form method="POST" modelAttribute="blogUser">
+    <form:form method="POST" modelAttribute="form" action="${pageContext.request.contextPath}/user/update/${form.username}">
+
         <form:label path="username">Username</form:label><br/>
         <form:input type="text" path="username"/><br/><br/>
         <form:label path="password">Password</form:label><br/>
         <form:input type="text" path="password"/><br/><br/>
-        <form:label path="roles">Roles</form:label><br/>
-        <form:checkbox path="roles" value="ROLE_USER"/>ROLE_USER
-        <form:checkbox path="roles" value="ROLE_ADMIN"/>ROLE_ADMIN
+        <form:label path="email" class="text">Email</form:label><br/>
+        <form:input type="text" class="text_input" path="email"/><br/><br/>
+        <form:label path="phoneNumber" class="text">PhoneNumber</form:label><br/>
+        <form:input type="text" class="text_input" path="phoneNumber"/><br/><br/>
+
+        <c:forEach var="role" items="ROLE_USER,ROLE_ADMIN">
+            <input type="checkbox" name="roles" value="${role}" id="${role}"
+                   <c:if test="${role=='ROLE_USER'}">checked="checked"</c:if>
+            />
+            <label for="${role}">${role}</label>
+        </c:forEach>
+
         <br/><br/>
-        <input type="submit" value="Add User"/>
+        <input type="submit" value="Update"/>
     </form:form>
+
+
+
 </div>
+<a href="<c:url value="/blog"/>" class="return">Return to Home page</a>
 </body>
 
 <script>

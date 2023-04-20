@@ -1,11 +1,13 @@
 package hkmu.edu.hk.s380f.noot.dao;
 
 import hkmu.edu.hk.s380f.noot.model.BlogUser;
+import hkmu.edu.hk.s380f.noot.model.UserRole;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service

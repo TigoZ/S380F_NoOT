@@ -36,7 +36,11 @@ public class BlogService {
 
     @Transactional
     public List<Blog> getBlogs() {
-        return bRepo.findAll();
+        List<Blog> blogs = bRepo.findAll();
+        for (Blog blog : blogs) {
+            blog.setCustomerName(blog.getCustomer().getUsername());
+        }
+        return blogs;
     }
 
     @Transactional
@@ -46,6 +50,7 @@ public class BlogService {
         if (blog == null) {
             throw new BlogNotFound(id);
         }
+        blog.setCustomerName(blog.getCustomer().getUsername());
         return blog;
     }
 
@@ -181,6 +186,8 @@ public class BlogService {
             return new ArrayList<>();
         }
     }
+
+
 
 }
 

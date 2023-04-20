@@ -3,108 +3,108 @@
 <head>
     <title>Photo Blog</title>
     <style>
-		* {
-			padding: 10px;
-			margin: 0;
-		}
+        * {
+            padding: 10px;
+            margin: 0;
+        }
 
-		.nav {
-			height: 100%;
-			width: 300px;
-			position: fixed;
-			top: 0;
-			left: 0;
-			overflow-x: hidden;
-			padding-top: 20px;
-			border-right: 1px solid rgba(222, 211, 211, 0.55);
-			float: left;
-			font-size: 30px;
-		}
+        .nav {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            border-right: 1px solid rgba(222, 211, 211, 0.55);
+            float: left;
+            font-size: 30px;
+        }
 
-		.nav_content {
-			height: 80%;
-		}
+        .nav_content {
+            height: 80%;
+        }
 
-		#logout {
-			position: relative;
-			margin-top: 100%;
-		}
+        #logout {
+            position: relative;
+            margin-top: 100%;
+        }
 
-		.nav_content a {
-			display: block;
-			color: #000;
-			padding: 16px;
-			text-decoration: none;
-			font-size: 22px;
-			border-radius: 4px;
-		}
+        .nav_content a {
+            display: block;
+            color: #000;
+            padding: 16px;
+            text-decoration: none;
+            font-size: 22px;
+            border-radius: 4px;
+        }
 
-		.nav_content a:hover {
-			background-color: #979494c1;
-			color: white;
-		}
+        .nav_content a:hover {
+            background-color: #979494c1;
+            color: white;
+        }
 
-		.title {
-			text-decoration: none;
-			color: #000;
-			display: block;
-		}
+        .title {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
 
-		.content {
-			margin: 0 400px;
-			max-width: 900px;
-			padding: 20px;
-			font-size: 22px;
-		}
+        .content {
+            margin: 0 400px;
+            max-width: 900px;
+            padding: 20px;
+            font-size: 22px;
+        }
 
-		.return {
-			text-decoration: none;
-			float: right;
-			font-size: 22px;
-		}
+        .return {
+            text-decoration: none;
+            float: right;
+            font-size: 22px;
+        }
 
-		.image-container {
-			max-width: 100%;
-		}
+        .image-container {
+            max-width: 100%;
+        }
 
-		.modal {
-			display: none;
-			position: fixed;
-			z-index: 1000;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			background-color: rgba(0, 0, 0, 0.5);
-		}
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
-		.modal-content {
-			position: relative;
-			margin: 10% auto;
-			padding: 20px;
-			width: 80%;
-			max-width: 800px;
-			background-color: #fff;
-			border: 1px solid #888;
-		}
+        .modal-content {
+            position: relative;
+            margin: 10% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            border: 1px solid #888;
+        }
 
-		.modal-image {
-			display: block;
-			max-width: 100%;
-			max-height: 100%;
-			margin: auto;
-		}
+        .modal-image {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+        }
 
-		.close {
-			position: absolute;
-			top: 0;
-			right: 5px;
-			color: #aaa;
-			font-size: 28px;
-			font-weight: bold;
-			cursor: pointer;
-		}
+        .close {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
     <link href="https://fonts.googlefonts.cn/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
@@ -136,13 +136,12 @@
 
 <div class="content">
     <h2>Photo Blog #${blogId}: <c:out value="${blog.subject}"/></h2>
-    <security:authorize access="hasRole('ADMIN') or
-                          principal=='${blog.customerName}'">
-        [<a href="<c:url value="/blog/edit/${blog.id}"/>">Edit</a>]
-    </security:authorize>
+
     <security:authorize access="hasRole('ADMIN')">
-        [<a href="<c:url value="/blog/delete/${blog.id}"/>">Delete</a>]
+        [<a href="<c:url value='/blog/edit/${blog.id}'/>">Edit</a>]
+        [<a href="<c:url value='/blog/delete/${blog.id}'/>">Delete</a>]
     </security:authorize>
+
     <br/><br/>
     <i>User Name - <c:out value="${blog.customerName}"/></i><br/><br/>
     Photo Blog created: <fmt:formatDate value="${blog.createTime}"
@@ -177,11 +176,11 @@
     <security:authorize access="hasAnyRole('USER', 'ADMIN')">
         <form action="<c:url value='/blog/comment/${blogId}'/>" method="post">
 
-            <input type="text" name="content" placeholder="add your comment" />
-            <input type="hidden" name="username" value="${blog.customerName}" />
-            <input type="hidden" name="blogId" value="${blogId}" />
+            <input type="text" name="content" placeholder="add your comment"/>
+            <input type="hidden" name="username" value="${blog.customerName}"/>
+            <input type="hidden" name="blogId" value="${blogId}"/>
             <button type="submit">submit</button>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </security:authorize>
 
@@ -239,7 +238,7 @@
         xhr.send('${_csrf.parameterName}=' + encodeURIComponent(csrfToken));
     });
 
-        function timeDifference(current, previous) {
+    function timeDifference(current, previous) {
         var msPerMinute = 60 * 1000;
         var msPerHour = msPerMinute * 60;
         var msPerDay = msPerHour * 24;
@@ -249,24 +248,24 @@
         var elapsed = current - previous;
 
         if (elapsed < msPerMinute) {
-        return Math.round(elapsed / 1000) + ' seconds ago';
-    } else if (elapsed < msPerHour) {
-        return Math.round(elapsed / msPerMinute) + ' minutes ago';
-    } else if (elapsed < msPerDay) {
-        return Math.round(elapsed / msPerHour) + ' hours ago';
-    } else if (elapsed < msPerMonth) {
-        return Math.round(elapsed / msPerDay) + ' days ago';
-    } else if (elapsed < msPerYear) {
-        return Math.round(elapsed / msPerMonth) + ' months ago';
-    } else {
-        return Math.round(elapsed / msPerYear) + ' years ago';
-    }
+            return Math.round(elapsed / 1000) + ' seconds ago';
+        } else if (elapsed < msPerHour) {
+            return Math.round(elapsed / msPerMinute) + ' minutes ago';
+        } else if (elapsed < msPerDay) {
+            return Math.round(elapsed / msPerHour) + ' hours ago';
+        } else if (elapsed < msPerMonth) {
+            return Math.round(elapsed / msPerDay) + ' days ago';
+        } else if (elapsed < msPerYear) {
+            return Math.round(elapsed / msPerMonth) + ' months ago';
+        } else {
+            return Math.round(elapsed / msPerYear) + ' years ago';
+        }
     }
 
-        var timeDifferenceElements = document.getElementsByClassName('time-difference');
-        var currentTime = new Date().getTime();
+    var timeDifferenceElements = document.getElementsByClassName('time-difference');
+    var currentTime = new Date().getTime();
 
-        for (var i = 0; i < timeDifferenceElements.length; i++) {
+    for (var i = 0; i < timeDifferenceElements.length; i++) {
         var commentTime = new Date(timeDifferenceElements[i].getAttribute('data-time')).getTime();
         timeDifferenceElements[i].innerText = timeDifference(currentTime, commentTime);
     }

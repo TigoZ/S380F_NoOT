@@ -147,13 +147,10 @@
                     </div><br/>
                 </c:if>
 
-                <security:authorize access="hasRole('ADMIN') or
-                                principal=='${entry.customerName}'">
+                <c:if test="${canEditOrDelete[entry.id]}">
                     [<a href="<c:url value="/blog/edit/${entry.id}"/>">Edit</a>]
-                </security:authorize>
-                <security:authorize access="hasRole('ADMIN')">
                     [<a href="<c:url value="/blog/delete/${entry.id}"/>">Delete</a>]
-                </security:authorize>
+                </c:if>
                 <br/><br/><br/>
 
             </c:forEach>

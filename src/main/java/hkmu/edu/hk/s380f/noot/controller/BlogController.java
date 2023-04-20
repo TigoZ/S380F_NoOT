@@ -29,7 +29,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -50,8 +52,18 @@ public class BlogController {
 
     // Controller methods, Form-backing object, ...
     @GetMapping(value = {"", "/list"})
-    public String list(ModelMap model) {
-        model.addAttribute("blogDatabase", bService.getBlogs());
+    public String list(ModelMap model, Principal principal) {
+        List<Blog> blogs = bService.getBlogs();
+        if (principal != null) {
+            String loggedInUsername = principal.getName();
+            Map<Long, Boolean> canEditOrDelete = new HashMap<>();
+            for (Blog blog : blogs) {
+                boolean canEdit = loggedInUsername.equals(blog.getCustomerName()) || blogUserService.isAdmin(loggedInUsername);
+                canEditOrDelete.put(blog.getId(), canEdit);
+            }
+            model.addAttribute("canEditOrDelete", canEditOrDelete);
+        }
+        model.addAttribute("blogDatabase", blogs);
         return "list";
     }
 
@@ -96,6 +108,9 @@ public class BlogController {
     public View create(Form form, Principal principal) throws IOException {
         long blogId = bService.createBlog(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
+
+        logger.info("Blog created with customerName: {}", principal.getName());
+
         return new RedirectView("/blog/view/" + blogId, true);
     }
 
@@ -109,15 +124,6 @@ public class BlogController {
         model.addAttribute("blog", blog);
         return "view";
     }
-
-/*    @GetMapping("/{blogId}/attachment/{attachment:.+}")
-    public View download(@PathVariable("blogId") long blogId,
-                         @PathVariable("attachment") UUID attachmentId)
-            throws BlogNotFound, AttachmentNotFound {
-        Attachment attachment = bService.getAttachment(blogId, attachmentId);
-        return new DownloadingView(attachment.getName(),
-                attachment.getMimeContentType(), attachment.getContents());
-    }*/
 
     @GetMapping("/{blogId}/image/{attachment:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable("blogId") long blogId,
@@ -201,6 +207,9 @@ public class BlogController {
         model.addAttribute("userBlogs", userBlogs);
         return "profile";
     }
+
+
+
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})
     public ModelAndView error(Exception e) {
