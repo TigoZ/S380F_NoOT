@@ -254,6 +254,10 @@ public class BlogController {
         model.addAttribute("user", blogUser);
         model.addAttribute("description", blogUser.getDescription());
 
+        boolean canEditProfile = principal.getName().equals(username) || blogUserService.isAdmin(principal.getName());
+        model.addAttribute("canEditProfile", canEditProfile);
+
+
         if (username.equals(principal.getName())) {
             return "profile";
         } else {
@@ -262,6 +266,37 @@ public class BlogController {
     }
 
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @GetMapping("/profile/edit/{username}")
+    public ModelAndView editProfile(@PathVariable("username") String username, Principal principal) {
+        BlogUser user = blogUserService.findByUsername(username);
+
+        if (user == null || (!blogUserService.isAdmin(principal.getName()) && !principal.getName().equals(user.getUsername()))) {
+            return new ModelAndView(new RedirectView("/profile", true));
+        }
+
+        ModelAndView modelAndView = new ModelAndView("editProfile");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PostMapping("/profile/edit/{username}")
+    public String updateProfile(@PathVariable("username") String username, @ModelAttribute("user") BlogUser updatedUser, Principal principal) {
+        BlogUser user = blogUserService.findByUsername(username);
+
+        if (user == null || (!blogUserService.isAdmin(principal.getName()) && !principal.getName().equals(user.getUsername()))) {
+            return "redirect:/profile";
+        }
+
+        user.setEmail(updatedUser.getEmail());
+        user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setDescription(updatedUser.getDescription());
+
+        blogUserService.save(user);
+
+        return "redirect:/blog/profile";
+    }
 
 
     @ExceptionHandler({BlogNotFound.class, AttachmentNotFound.class})

@@ -137,6 +137,10 @@
     <p>Email: ${user.email}</p>
     <p>Phone Number: ${user.phoneNumber}</p>
     <p>Description: ${description}</p>
+    <c:if test="${canEditProfile}">
+        <a href="${pageContext.request.contextPath}/blog/profile/edit/${user.username}">Edit Profile</a>
+    </c:if>
+
     <hr>
     <h2>User's Blogs</h2>
     <c:choose>

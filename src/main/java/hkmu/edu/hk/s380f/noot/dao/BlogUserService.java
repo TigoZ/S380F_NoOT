@@ -46,6 +46,10 @@ public class BlogUserService implements UserDetailsService {
         return false;
     }
 
+    public void save(BlogUser user) {
+        blogUserRepo.save(user);
+    }
+
     @Transactional(readOnly = true)
     public BlogUser findByUsername(String username) {
         return blogUserRepo.findById(username).orElse(null);
